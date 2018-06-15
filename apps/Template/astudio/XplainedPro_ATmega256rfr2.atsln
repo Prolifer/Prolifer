@@ -2,6 +2,10 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Atmel Studio Solution File, Format Version 11.00
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "XplainedPro_ATmega256rfr2", "XplainedPro_ATmega256rfr2.cproj", "{0D18254A-A388-2DEA-562B-957D57E04BB3}"
 EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Prolifer", "..\Prolifer\Prolifer.cproj", "{C7A7084C-8039-442B-B5D0-404C5443B69E}"
+EndProject
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Test", "Test\Test.cproj", "{D8BC0D13-BD0C-47AA-B3AC-5E891FB91240}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AVR = Debug|AVR
@@ -12,6 +16,14 @@ Global
 		{0D18254A-A388-2DEA-562B-957D57E04BB3}.Debug|AVR.Build.0 = Debug|AVR
 		{0D18254A-A388-2DEA-562B-957D57E04BB3}.Release|AVR.ActiveCfg = Release|AVR
 		{0D18254A-A388-2DEA-562B-957D57E04BB3}.Release|AVR.Build.0 = Release|AVR
+		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Debug|AVR.ActiveCfg = Debug|AVR
+		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Debug|AVR.Build.0 = Debug|AVR
+		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Release|AVR.ActiveCfg = Release|AVR
+		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Release|AVR.Build.0 = Release|AVR
+		{D8BC0D13-BD0C-47AA-B3AC-5E891FB91240}.Debug|AVR.ActiveCfg = Debug|AVR
+		{D8BC0D13-BD0C-47AA-B3AC-5E891FB91240}.Debug|AVR.Build.0 = Debug|AVR
+		{D8BC0D13-BD0C-47AA-B3AC-5E891FB91240}.Release|AVR.ActiveCfg = Release|AVR
+		{D8BC0D13-BD0C-47AA-B3AC-5E891FB91240}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

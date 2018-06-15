@@ -68,7 +68,6 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
-
 /*- Implementations --------------------------------------------------------*/
 
 // Put your function implementations here
