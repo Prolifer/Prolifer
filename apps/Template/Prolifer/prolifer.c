@@ -6,10 +6,8 @@
  */ 
 
 #include <avr/io.h>
+#include "Profiler.h"
 
-int function(void)
-{
-    //TODO:: Please write your application code
-
-    return 0;
+bool writeData(void){
+	return FALSE;
 }

@@ -67,7 +67,7 @@ ADDITIONAL_DEPENDENCIES:=
 OUTPUT_FILE_DEP:= ./makedep.mk
 
 LIB_DEP+=  \
-C:/Users/para2709/Desktop/Prolifer/apps/Template/Prolifer/Debug/libProlifer.a
+C:/Users/antho/OneDrive/Desktop/GE/S6/PROJET/Code/Prolifer/apps/Template/Prolifer/Debug/libProlifer.a
 
 LINKER_SCRIPT_DEP+= 
 
@@ -108,7 +108,7 @@ all: $(OUTPUT_FILE_PATH) $(ADDITIONAL_DEPENDENCIES)
 $(OUTPUT_FILE_PATH): $(OBJS) $(USER_OBJS) $(OUTPUT_FILE_DEP) $(LIB_DEP) $(LINKER_SCRIPT_DEP)
 	@echo Building target: $@
 	@echo Invoking: AVR/GNU Linker : 4.8.1
-	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="Test.map" -Wl,--start-group -Wl,-lm -Wl,-lProlifer  -Wl,--end-group -Wl,-L"C:\Users\para2709\Desktop\Prolifer\apps\Template\Prolifer\Debug"  -Wl,--gc-sections -mrelax -mmcu=atmega256rfr2  
+	$(QUOTE)C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE) -o$(OUTPUT_FILE_PATH_AS_ARGS) $(OBJS_AS_ARGS) $(USER_OBJS) $(LIBS) -Wl,-Map="Test.map" -Wl,--start-group -Wl,-lm -Wl,-lProlifer  -Wl,--end-group -Wl,-L"C:\Users\antho\OneDrive\Desktop\GE\S6\PROJET\Code\Prolifer\apps\Template\Prolifer\Debug"  -Wl,--gc-sections -mrelax -mmcu=atmega256rfr2  
 	@echo Finished building target: $@
 	"C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-objcopy.exe" -O ihex -R .eeprom -R .fuse -R .lock -R .signature -R .user_signatures  "Test.elf" "Test.hex"
 	"C:\Program Files (x86)\Atmel\Atmel Toolchain\AVR8 GCC\Native\3.4.1061\avr8-gnu-toolchain\bin\avr-objcopy.exe" -j .eeprom  --set-section-flags=.eeprom=alloc,load --change-section-lma .eeprom=0  --no-change-warnings -O ihex "Test.elf" "Test.eep" || exit 0

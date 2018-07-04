@@ -46,7 +46,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-
 LOAD test.o
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a
-LOAD C:\Users\para2709\Desktop\Prolifer\apps\Template\Prolifer\Debug\libProlifer.a
+LOAD C:\Users\antho\OneDrive\Desktop\GE\S6\PROJET\Code\Prolifer\apps\Template\Prolifer\Debug\libProlifer.a
 END GROUP
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr6\libgcc.a
@@ -413,10 +413,10 @@ END GROUP
  *(.debug_frame)
  .debug_frame   0x00000000       0x24 test.o
 
-.debug_str      0x00000000      0x128
+.debug_str      0x00000000      0x140
  *(.debug_str)
- .debug_str     0x00000000      0x128 test.o
-                                0x15c (size before relaxing)
+ .debug_str     0x00000000      0x140 test.o
+                                0x174 (size before relaxing)
 
 .debug_loc
  *(.debug_loc)

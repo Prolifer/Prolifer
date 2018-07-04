@@ -196,7 +196,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-
 LOAD stack/phy/atmegarfr2/src/phy.o
 LOAD template.o
 START GROUP
-LOAD C:\Users\para2709\Desktop\Prolifer\apps\Template\Prolifer\Debug\libProlifer.a
+LOAD C:\Users\antho\OneDrive\Desktop\GE\S6\PROJET\Code\Prolifer\apps\Template\Prolifer\Debug\libProlifer.a
 END GROUP
 START GROUP
 LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1061/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/avr6\libgcc.a
@@ -646,12 +646,12 @@ END GROUP
  .debug_frame   0x00000000       0xbc stack/phy/atmegarfr2/src/phy.o
  .debug_frame   0x000000bc       0xa0 template.o
 
-.debug_str      0x00000000     0xf957
+.debug_str      0x00000000     0xf96f
  *(.debug_str)
- .debug_str     0x00000000     0xf487 stack/phy/atmegarfr2/src/phy.o
-                               0xf5b0 (size before relaxing)
- .debug_str     0x0000f487      0x4d0 template.o
-                               0xe5d7 (size before relaxing)
+ .debug_str     0x00000000     0xf49f stack/phy/atmegarfr2/src/phy.o
+                               0xf5c8 (size before relaxing)
+ .debug_str     0x0000f49f      0x4d0 template.o
+                               0xe5ef (size before relaxing)
 
 .debug_loc      0x00000000      0x3db
  *(.debug_loc)

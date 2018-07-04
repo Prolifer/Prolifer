@@ -37,7 +37,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../prolifer.c
+../Prolifer.c
 
 
 PREPROCESSING_SRCS += 
@@ -47,16 +47,16 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-prolifer.o
+Prolifer.o
 
 OBJS_AS_ARGS +=  \
-prolifer.o
+Prolifer.o
 
 C_DEPS +=  \
-prolifer.d
+Prolifer.d
 
 C_DEPS_AS_ARGS +=  \
-prolifer.d
+Prolifer.d
 
 OUTPUT_FILE_PATH +=libProlifer.a
 
