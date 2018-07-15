@@ -44,7 +44,7 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../../../../phy/atmegarfr2/src/phy.c \
-../template.c
+../test.c
 
 
 PREPROCESSING_SRCS += 
@@ -55,19 +55,19 @@ ASM_SRCS +=
 
 OBJS +=  \
 stack/phy/atmegarfr2/src/phy.o \
-template.o
+test.o
 
 OBJS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.o \
-template.o
+test.o
 
 C_DEPS +=  \
 stack/phy/atmegarfr2/src/phy.d \
-template.d
+test.d
 
 C_DEPS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.d \
-template.d
+test.d
 
 OUTPUT_FILE_PATH +=Template.elf
 

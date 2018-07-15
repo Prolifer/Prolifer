@@ -200,9 +200,8 @@
       <SubType>compile</SubType>
       <Link>stack\phy\atmegarfr2\inc\atmegarfr2.h</Link>
     </Compile>
-    <Compile Include="template.c">
+    <Compile Include="test.c">
       <SubType>compile</SubType>
-      <Link>template.c</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

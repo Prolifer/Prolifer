@@ -4,5 +4,5 @@
 
 ..\..\..\phy\atmegarfr2\src\phy.c
 
-template.c
+test.c
 
