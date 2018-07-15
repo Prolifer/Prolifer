@@ -22,6 +22,8 @@ bool decryption(void);
 bool writingLED_ON(void);
 bool readingLED_ON(void);
 bool writingLED_OFF(void);
-bool readingLED_OFF(void); 
+bool readingLED_OFF(void);
+bool isInteracted(void);
+void profiler(void);
 
 #endif /* PROFILER_H_ */

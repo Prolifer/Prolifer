@@ -11,3 +11,14 @@
 bool writeData(void){
 	return FALSE;
 }
+
+bool isInteracted(void){
+	return FALSE;
+}
+
+void profiler(void){
+	while(1){
+		//Wait for interaction
+		isInteracted();
+	}
+}
