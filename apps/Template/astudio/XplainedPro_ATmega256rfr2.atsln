@@ -4,10 +4,7 @@ Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "XplainedPro_ATmega256rfr2",
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Prolifer", "..\Prolifer\Prolifer.cproj", "{C7A7084C-8039-442B-B5D0-404C5443B69E}"
 EndProject
-Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test", "..\test\apps\Template\astudio\test.cproj", "{4B014AD1-4863-4171-B756-4FB1D41E4B32}"
-	ProjectSection(ProjectDependencies) = postProject
-		{C7A7084C-8039-442B-B5D0-404C5443B69E} = {C7A7084C-8039-442B-B5D0-404C5443B69E}
-	EndProjectSection
+Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test", "..\test\apps\Template\astudio\test.cproj", "{0361786F-7A60-4ECD-9C62-4298B3658C8E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +20,10 @@ Global
 		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Debug|AVR.Build.0 = Debug|AVR
 		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Release|AVR.ActiveCfg = Release|AVR
 		{C7A7084C-8039-442B-B5D0-404C5443B69E}.Release|AVR.Build.0 = Release|AVR
-		{4B014AD1-4863-4171-B756-4FB1D41E4B32}.Debug|AVR.ActiveCfg = Debug|AVR
-		{4B014AD1-4863-4171-B756-4FB1D41E4B32}.Debug|AVR.Build.0 = Debug|AVR
-		{4B014AD1-4863-4171-B756-4FB1D41E4B32}.Release|AVR.ActiveCfg = Release|AVR
-		{4B014AD1-4863-4171-B756-4FB1D41E4B32}.Release|AVR.Build.0 = Release|AVR
+		{0361786F-7A60-4ECD-9C62-4298B3658C8E}.Debug|AVR.ActiveCfg = Debug|AVR
+		{0361786F-7A60-4ECD-9C62-4298B3658C8E}.Debug|AVR.Build.0 = Debug|AVR
+		{0361786F-7A60-4ECD-9C62-4298B3658C8E}.Release|AVR.ActiveCfg = Release|AVR
+		{0361786F-7A60-4ECD-9C62-4298B3658C8E}.Release|AVR.Build.0 = Release|AVR
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

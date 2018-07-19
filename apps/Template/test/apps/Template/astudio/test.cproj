@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.2</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{4b014ad1-4863-4171-b756-4fb1d41e4b32}</ProjectGuid>
+    <ProjectGuid>{0361786f-7a60-4ecd-9c62-4298b3658c8e}</ProjectGuid>
     <avrdevice>ATmega256RFR2</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -200,26 +200,9 @@
       <SubType>compile</SubType>
       <Link>stack\phy\atmegarfr2\inc\atmegarfr2.h</Link>
     </Compile>
-    <Compile Include="init.c">
+    <Compile Include="template.c">
       <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="init.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="test.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Timer.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Timer.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Uart.c">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="Uart.h">
-      <SubType>compile</SubType>
+      <Link>template.c</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>
