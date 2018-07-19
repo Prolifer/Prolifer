@@ -200,7 +200,25 @@
       <SubType>compile</SubType>
       <Link>stack\phy\atmegarfr2\inc\atmegarfr2.h</Link>
     </Compile>
+    <Compile Include="init.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="init.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="test.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Uart.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Uart.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

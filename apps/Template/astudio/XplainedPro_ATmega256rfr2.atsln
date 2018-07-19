@@ -5,6 +5,9 @@ EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "Prolifer", "..\Prolifer\Prolifer.cproj", "{C7A7084C-8039-442B-B5D0-404C5443B69E}"
 EndProject
 Project("{54F91283-7BC4-4236-8FF9-10F437C3AD48}") = "test", "..\test\apps\Template\astudio\test.cproj", "{4B014AD1-4863-4171-B756-4FB1D41E4B32}"
+	ProjectSection(ProjectDependencies) = postProject
+		{C7A7084C-8039-442B-B5D0-404C5443B69E} = {C7A7084C-8039-442B-B5D0-404C5443B69E}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

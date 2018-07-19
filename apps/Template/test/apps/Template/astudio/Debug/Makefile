@@ -44,7 +44,10 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../../../../phy/atmegarfr2/src/phy.c \
-../test.c
+../init.c \
+../test.c \
+../Timer.c \
+../Uart.c
 
 
 PREPROCESSING_SRCS += 
@@ -55,19 +58,31 @@ ASM_SRCS +=
 
 OBJS +=  \
 stack/phy/atmegarfr2/src/phy.o \
-test.o
+init.o \
+test.o \
+Timer.o \
+Uart.o
 
 OBJS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.o \
-test.o
+init.o \
+test.o \
+Timer.o \
+Uart.o
 
 C_DEPS +=  \
 stack/phy/atmegarfr2/src/phy.d \
-test.d
+init.d \
+test.d \
+Timer.d \
+Uart.d
 
 C_DEPS_AS_ARGS +=  \
 stack/phy/atmegarfr2/src/phy.d \
-test.d
+init.d \
+test.d \
+Timer.d \
+Uart.d
 
 OUTPUT_FILE_PATH +=Template.elf
 
@@ -83,6 +98,12 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
+
+
 
 
 

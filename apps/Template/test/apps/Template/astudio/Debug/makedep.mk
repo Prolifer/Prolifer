@@ -4,5 +4,11 @@
 
 ..\..\..\phy\atmegarfr2\src\phy.c
 
+init.c
+
 test.c
+
+Timer.c
+
+Uart.c
 
