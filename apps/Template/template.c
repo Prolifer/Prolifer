@@ -89,10 +89,6 @@ static void APP_TaskHandler(void)
 		Ecris_Wireless(demonstration_string, 10); //envoie le data packet; nombre d'éléments utiles du paquet à envoyer
 		}
   }
-
-
-
-
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
@@ -126,8 +122,6 @@ static void APP_TaskHandler(void)
   }
 }
 
-
-
 /*************************************************************************//**
 *****************************************************************************/
 int main(void)
@@ -140,12 +134,6 @@ int main(void)
     APP_TaskHandler(); //l'application principale roule ici
   }
 }
-
-
-
-
-
-
 
 //FONCTION D'INITIALISATION
 /*************************************************************************//**
@@ -161,26 +149,7 @@ PHY_SetRxState(1); //TRX_CMD_RX_ON
 //
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //FONCTIONS POUR L'UART
-
 char Lis_UART(void)
 {
 
@@ -195,13 +164,11 @@ char data = 0;
 return data;
 }
 
-
 void Ecris_UART(char data)
 {
 	UDR1 = data;
 	while(!(UCSR1A & (0x01 << UDRE1)));
 }
-
 
 void init_UART(void)
 {
@@ -214,5 +181,3 @@ void init_UART(void)
 	UCSR1B = 0x18; //receiver, transmitter enable, no parity
 	UCSR1C = 0x06; //8-bits per character, 1 stop bit
 }
-
-

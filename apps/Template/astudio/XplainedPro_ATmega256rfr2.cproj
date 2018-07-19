@@ -211,12 +211,5 @@
     <Folder Include="stack\phy\atmegarfr2\inc" />
     <Folder Include="stack\phy\atmegarfr2\src" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Prolifer\Prolifer.cproj">
-      <Name>Prolifer</Name>
-      <Project>{c7a7084c-8039-442b-b5d0-404c5443b69e}</Project>
-      <Private>True</Private>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>
