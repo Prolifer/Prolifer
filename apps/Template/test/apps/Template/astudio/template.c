@@ -50,9 +50,12 @@
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
-
+enum credential{CIVILIAN,PROFESSIONAL,AUTHORITARIAN};
+enum Information{PRENOM,NOM,AGE,END};
+	
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
+void readData(void);
 
 /*- Prototypes -------------------------------------------------------------*/
 // Put your function prototypes here
@@ -68,7 +71,9 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
-
+char Nom[] = "Sylvain-Cameron";
+char Prenom[] = "Alexandre";
+char Age[] = "24";
 
 /*- Implementations --------------------------------------------------------*/
 
@@ -91,10 +96,6 @@ static void APP_TaskHandler(void)
 		Ecris_Wireless(demonstration_string, 10); //envoie le data packet; nombre d'éléments utiles du paquet à envoyer
 		}
   }
-
-
-
-
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
@@ -128,11 +129,9 @@ static void APP_TaskHandler(void)
   }
 }
 
-
-
 /*************************************************************************//**
 *****************************************************************************/
-int testMain(void)
+int main(void)
 {
   SYS_Init();
    
@@ -142,15 +141,6 @@ int testMain(void)
     APP_TaskHandler(); //l'application principale roule ici
   }
 }
-
-int main(void)
-{
-	testMain();
-}
-
-
-
-
 
 //FONCTION D'INITIALISATION
 /*************************************************************************//**
@@ -165,24 +155,42 @@ PHY_SetRxState(1); //TRX_CMD_RX_ON
 }
 //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+void readData()
+{
+	int User_Type = 0, Access[20];
+	
+	if (User_Type == CIVILIAN)
+	{
+		Access[0] = PRENOM;
+		Access[1] = END;
+	}
+	else if (User_Type == PROFESSIONAL)
+	{
+		Access[0] = PRENOM;
+		Access[1] = NOM;
+		Access[2] = END;
+	}
+	else if (User_Type == AUTHORITARIAN)
+	{
+		Access[0] = PRENOM;
+		Access[1] = NOM;
+		Access[2] = AGE;
+		Access[3] = END;
+	}
+	else
+	{
+		Access[0] = END;
+	}
+	
+	for (int i=0;i<=sizeof(Access);i++)
+	{
+		switch (Access[i])
+		{
+			case END :
+			i = sizeof(Access);
+		}
+	}
+}
 
 //FONCTIONS POUR L'UART
 
@@ -200,13 +208,11 @@ char data = 0;
 return data;
 }
 
-
 void Ecris_UART(char data)
 {
 	UDR1 = data;
 	while(!(UCSR1A & (0x01 << UDRE1)));
 }
-
 
 void init_UART(void)
 {
@@ -219,5 +225,3 @@ void init_UART(void)
 	UCSR1B = 0x18; //receiver, transmitter enable, no parity
 	UCSR1C = 0x06; //8-bits per character, 1 stop bit
 }
-
-
