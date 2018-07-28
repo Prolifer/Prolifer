@@ -24,12 +24,24 @@ void printSeparator(){
 	printString("\n\r**********************************************************************\n\r");
 }
 
+//TODO: Correct the function to make it act as a scanf(), gets(), etc.
+char readKeyboard(){
+	char data = 0;
+	
+	if(UCSR1A & (0x01 << RXC1))
+	{
+		data = UDR1;
+	}
+	
+	return data;
+}
+
 //GUI
 bool openingMenu(){
 	bool isSessionOpened = false;
 	char option = '0';
 	
-	while((option != '1' || option != '2') && isSessionOpened){
+	while((option != '1' || option != '2') && !isSessionOpened){
 		printGuiHeaders();
 		printString("\n\r");
 		printString("SELECT OPTION: \n\r\t1 - OPEN SESSION \n\r\t2 - EXIT");

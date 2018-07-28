@@ -20,6 +20,7 @@
 void printString(char* s);
 void printGuiHeaders();
 void printSeparator();
+char readKeyboard();//TODO: Correct the function to make it act as a scanf(), gets(), etc.
 
 //GUI
 bool openingMenu();

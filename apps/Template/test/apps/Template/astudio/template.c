@@ -135,7 +135,7 @@ static void APP_TaskHandler(void)
 int main(void)
 {
 	SYS_Init();
-	printGuiHeaders();
+	openingMenu();
    
 
    

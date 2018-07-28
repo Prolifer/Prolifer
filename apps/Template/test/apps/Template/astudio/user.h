@@ -23,14 +23,14 @@ enum Information{PRENOM,NOM,AGE,END};
 //User ID
 bool isUserExisting();
 
-//Read  
+//Read  //TODO: Implement those functions
 void readTargetPublicID();
 void readTargetPrivateID();
 void readTargetHealthID();
 void readTargetFinancialID();
 void readTargetAllID();
 
-//Write (Reserved to Professional and Authoritarian)
+//Write (Reserved to Professional and Authoritarian) //TODO: Implement those functions
 void writeTargetPublicID();
 void writeTargetPrivateID();
 void writeTargetHealthID();
