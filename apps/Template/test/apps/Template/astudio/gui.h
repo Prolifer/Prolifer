@@ -9,12 +9,20 @@
 #ifndef GUI_H_
 #define GUI_H_
 
+#include <stdbool.h>
 #include "sys.h"
 #include "phy.h"
 
+//Defines
+#define NULL 0
+
+//Repetitive functions
 void printString(char* s);
-void startGUI();
-//void errorMessage();
+void printGuiHeaders();
+void printSeparator();
+
+//GUI
+bool openingMenu();
 
 
 

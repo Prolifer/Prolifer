@@ -135,16 +135,17 @@ static void APP_TaskHandler(void)
 int main(void)
 {
 	SYS_Init();
-	startGUI();
-
+	printGuiHeaders();
    
-   return 0;
+
    
   //while (1)
   //{
     //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
     //APP_TaskHandler(); //l'application principale roule ici
   //}
+  
+    return 0;
 }
 
 //FONCTION D'INITIALISATION

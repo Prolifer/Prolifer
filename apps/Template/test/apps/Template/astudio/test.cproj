@@ -204,6 +204,9 @@
       <SubType>compile</SubType>
       <Link>stack\phy\atmegarfr2\inc\atmegarfr2.h</Link>
     </Compile>
+    <Compile Include="dummies.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="gui.c">
       <SubType>compile</SubType>
     </Compile>
