@@ -9,7 +9,11 @@
 #ifndef DUMMIES_H_
 #define DUMMIES_H_
 
+//TODO: Create a CIVILIAN DUMMY
 
+//TODO: Create a PROFESSIONAL DUMMY
+
+//TODO: Create a AUTHORITARIAN DUMMY
 
 
 #endif /* DUMMIES_H_ */

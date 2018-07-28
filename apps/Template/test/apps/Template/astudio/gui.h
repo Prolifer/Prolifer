@@ -12,8 +12,8 @@
 #include <stdbool.h>
 #include "sys.h"
 #include "phy.h"
+#include "user.h"
 
-//Defines
 #define NULL 0
 
 //Repetitive functions
@@ -23,6 +23,7 @@ void printSeparator();
 
 //GUI
 bool openingMenu();
+bool openingSession();
 
 
 

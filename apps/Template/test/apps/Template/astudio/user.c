@@ -6,3 +6,8 @@
  */ 
 #include "user.h"
 
+//User ID
+bool isUserExisting(char* username, char* password){
+	//TODO : Implement logic with dummy
+	return false;
+}
