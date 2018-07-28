@@ -47,11 +47,12 @@
 /*- Includes ---------------------------------------------------------------*/
 #include "sys.h"
 #include "phy.h"
+#include "user.h"
+#include "gui.h"
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
-enum credential{CIVILIAN,PROFESSIONAL,AUTHORITARIAN};
-enum Information{PRENOM,NOM,AGE,END};
+
 	
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
@@ -133,13 +134,17 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-  SYS_Init();
+	SYS_Init();
+	startGUI();
+
    
-  while (1)
-  {
-    PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-    APP_TaskHandler(); //l'application principale roule ici
-  }
+   return 0;
+   
+  //while (1)
+  //{
+    //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+    //APP_TaskHandler(); //l'application principale roule ici
+  //}
 }
 
 //FONCTION D'INITIALISATION
