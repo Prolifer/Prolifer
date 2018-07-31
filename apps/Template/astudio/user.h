@@ -25,7 +25,7 @@ enum Information{PRENOM,NOM,DATE_NAISSANCE,ADRESSE,APPARTEMENT,VILLE,PAYS,PROVIN
 void Ecris_UART(char data);
 
 //User ID
-bool isUserExisting();
+bool identifyUser();
 
 void Creer_Paquet(char * ptr, size_t n_elements);
 void Decortiquer_Paquet(char * Data);

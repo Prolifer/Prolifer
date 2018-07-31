@@ -139,14 +139,16 @@ int main(void)
 	SYS_Init();
 	//Timer_Init();
 	Board_Init();
-   	readData(User);
+   	//readData(User);
 	   
-  while (1)
-  {
-    PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-    APP_TaskHandler(); //l'application principale roule ici
-	
-  }
+  //while (1)
+  //{
+    //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+    //APP_TaskHandler(); //l'application principale roule ici
+	//
+  //}
+  
+	openingMenu();
   
     return 0;
 }
