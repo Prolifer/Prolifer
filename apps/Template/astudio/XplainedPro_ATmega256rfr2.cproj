@@ -67,7 +67,7 @@
     <com_atmel_avrdbg_tool_edbg>
       <ToolOptions>
         <InterfaceProperties>
-          <JtagDbgClock>200000</JtagDbgClock>
+          <JtagDbgClock>220000</JtagDbgClock>
           <JtagEnableExtResetOnStartSession>true</JtagEnableExtResetOnStartSession>
           <JtagInChain>false</JtagInChain>
           <JtagDevicesBefore>0</JtagDevicesBefore>
@@ -82,7 +82,7 @@
         <InterfaceName>JTAG</InterfaceName>
       </ToolOptions>
       <ToolType>com.atmel.avrdbg.tool.edbg</ToolType>
-      <ToolNumber>ATML1784031800001172</ToolNumber>
+      <ToolNumber>ATML1784031800000958</ToolNumber>
       <ToolName>EDBG</ToolName>
     </com_atmel_avrdbg_tool_edbg>
     <preserveEEPROM>true</preserveEEPROM>
@@ -140,9 +140,6 @@
   <avrgcc.assembler.debugging.DebugLevel>Default (-Wa,-g)</avrgcc.assembler.debugging.DebugLevel>
 </AvrGcc>
     </ToolchainSettings>
-    <UsesExternalMakeFile>False</UsesExternalMakeFile>
-    <BuildTarget>all</BuildTarget>
-    <CleanTarget>clean</CleanTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
     <OutputFileName>Template</OutputFileName>
@@ -210,6 +207,30 @@
     <Compile Include="..\template.c">
       <SubType>compile</SubType>
       <Link>template.c</Link>
+    </Compile>
+    <Compile Include="config.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="dummies.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="gui.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="gui.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Timer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="user.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="user.h">
+      <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

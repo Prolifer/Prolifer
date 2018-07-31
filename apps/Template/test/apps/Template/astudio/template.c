@@ -49,6 +49,8 @@
 #include "phy.h"
 #include "user.h"
 #include "gui.h"
+#include "Timer.h"
+#include <stdio.h>
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
@@ -56,15 +58,14 @@
 	
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
-void readData(void);
 
 /*- Prototypes -------------------------------------------------------------*/
 // Put your function prototypes here
-int testMain(void);
 char Lis_UART(void);
 void Ecris_UART(char data);
 void init_UART(void);
 void SYS_Init(void);
+void Board_Init(void);
 
 /*- Variables --------------------------------------------------------------*/
 // Put your variables here
@@ -72,9 +73,6 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
-char Nom[] = "Sylvain-Cameron";
-char Prenom[] = "Alexandre";
-char Age[] = "24";
 
 /*- Implementations --------------------------------------------------------*/
 
@@ -134,8 +132,12 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
+	int User = 2;
+	PORTB &= ~(1 << 4); // Turn on LED
+	PORTB |= 0x10; //Turn off LED
 	SYS_Init();
-	openingMenu();
+	//Timer_Init();
+	Board_Init();
    
 
    
@@ -143,6 +145,7 @@ int main(void)
   //{
     //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
     //APP_TaskHandler(); //l'application principale roule ici
+	//readData(User);
   //}
   
     return 0;
@@ -161,41 +164,17 @@ PHY_SetRxState(1); //TRX_CMD_RX_ON
 }
 //
 
-void readData()
+void Board_Init(void)
 {
-	int User_Type = 0, Access[20];
+	sei();
 	
-	if (User_Type == CIVILIAN)
-	{
-		Access[0] = PRENOM;
-		Access[1] = END;
-	}
-	else if (User_Type == PROFESSIONAL)
-	{
-		Access[0] = PRENOM;
-		Access[1] = NOM;
-		Access[2] = END;
-	}
-	else if (User_Type == AUTHORITARIAN)
-	{
-		Access[0] = PRENOM;
-		Access[1] = NOM;
-		Access[2] = AGE;
-		Access[3] = END;
-	}
-	else
-	{
-		Access[0] = END;
-	}
+	// Configure LED pin
+	DDRB = 0x10; //PB4 output
+	PORTB |= 0x10; //Turn off LED
 	
-	for (int i=0;i<=sizeof(Access);i++)
-	{
-		switch (Access[i])
-		{
-			case END :
-			i = sizeof(Access);
-		}
-	}
+	// Configure "Start Button" pin
+	DDRE &= ~0x10; //PE4 input
+	PORTE |= 0x10; //Enable pull-up resistor
 }
 
 //FONCTIONS POUR L'UART
@@ -212,12 +191,6 @@ char data = 0;
 	}
 	
 return data;
-}
-
-void Ecris_UART(char data)
-{
-	UDR1 = data;
-	while(!(UCSR1A & (0x01 << UDRE1)));
 }
 
 void init_UART(void)

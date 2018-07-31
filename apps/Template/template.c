@@ -47,10 +47,15 @@
 /*- Includes ---------------------------------------------------------------*/
 #include "sys.h"
 #include "phy.h"
+#include "user.h"
+#include "gui.h"
+#include "Timer.h"
+#include <stdio.h>
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
 
+	
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
 
@@ -60,6 +65,7 @@ char Lis_UART(void);
 void Ecris_UART(char data);
 void init_UART(void);
 void SYS_Init(void);
+void Board_Init(void);
 
 /*- Variables --------------------------------------------------------------*/
 // Put your variables here
@@ -76,9 +82,9 @@ PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier
 *****************************************************************************/
 static void APP_TaskHandler(void)
 {
-  char receivedUart = 0;
+  char receivedUart = 'O';
 
-  receivedUart = Lis_UART();  
+  //receivedUart = Lis_UART();  
   if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
   {
 	  Ecris_UART(receivedUart);	//envoie l'echo du caractere recu par l'UART
@@ -126,13 +132,23 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-  SYS_Init();
+	int User = 2;
+	PORTB &= ~(1 << 4); // Turn on LED
+	PORTB |= 0x10; //Turn off LED
+	SYS_Init();
+	//Timer_Init();
+	Board_Init();
    
-  while (1)
-  {
-    PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-    APP_TaskHandler(); //l'application principale roule ici
-  }
+
+   
+  //while (1)
+  //{
+    //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+    //APP_TaskHandler(); //l'application principale roule ici
+	//readData(User);
+  //}
+  
+    return 0;
 }
 
 //FONCTION D'INITIALISATION
@@ -148,8 +164,21 @@ PHY_SetRxState(1); //TRX_CMD_RX_ON
 }
 //
 
+void Board_Init(void)
+{
+	sei();
+	
+	// Configure LED pin
+	DDRB = 0x10; //PB4 output
+	PORTB |= 0x10; //Turn off LED
+	
+	// Configure "Start Button" pin
+	DDRE &= ~0x10; //PE4 input
+	PORTE |= 0x10; //Enable pull-up resistor
+}
 
 //FONCTIONS POUR L'UART
+
 char Lis_UART(void)
 {
 
@@ -162,12 +191,6 @@ char data = 0;
 	}
 	
 return data;
-}
-
-void Ecris_UART(char data)
-{
-	UDR1 = data;
-	while(!(UCSR1A & (0x01 << UDRE1)));
 }
 
 void init_UART(void)
