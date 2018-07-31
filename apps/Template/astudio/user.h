@@ -14,11 +14,7 @@
 
 //enum IDType{PUBLIC,PRIVATE,HEALTH,FINANCIAL,ALL}; TODO: if time , iteration to implement
 enum Credential{NOTHING,CIVILIAN,PROFESSIONAL,AUTHORITARIAN} User_Type;
-enum Information{PRENOM,NOM,DATE_NAISSANCE,ADRESSE,APPARTEMENT,VILLE,PAYS,PROVINCE,CODE_POSTAL,SOIN_PARTICULIER,MEDICAMENT,MALADIE,COMMENTAIRE,GROUPE_SANGUIN,END} Access[20];
-
-
-	
-	
+enum Information{PRENOM,NOM,DATE_NAISSANCE,ADRESSE,APPARTEMENT,VILLE,PAYS,PROVINCE,CODE_POSTAL,SOIN_PARTICULIER,MEDICAMENT,MALADIE,COMMENTAIRE,GROUPE_SANGUIN,END,CREDENTIAL} Access[20];
 
 //Definitions of terms :
 //Target:	Person or entity which we try to obtain infos from.
@@ -32,11 +28,8 @@ void Ecris_UART(char data);
 bool isUserExisting();
 
 void Creer_Paquet(char * ptr, size_t n_elements);
+void Decortiquer_Paquet(char * Data);
 void readData(int Type);
-
-
-
-
 
 //Read  //TODO: Implement those functions, if time
 void readTargetPublicID();

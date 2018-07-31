@@ -9,9 +9,10 @@
 #include "sys.h"
 #include "phy.h"
 #include "Timer.h"
+#include <string.h>
 
 #define Longueur_Paquet 200
-#define Longueur_Entete 6
+#define Longueur_Entete 9
 
 char Nom[] = "Sylvain-Cameron";
 char Prenom[] = "Alexandre";
@@ -42,37 +43,6 @@ void Ecris_UART(char data)
 bool isUserExisting(char* username, char* password){
 	//TODO : Implement logic with dummy
 	return false;
-}
-
-
-void Creer_Paquet(char * ptr, size_t n_elements)
-{
-	Numero_Paquet++;
-	if (Numero_Paquet < 10)
-	{
-		Paquet[2] = 0;
-		Paquet[3] = Numero_Paquet;
-	}
-	else
-	{
-		Paquet[2] = Numero_Paquet/10;
-		Paquet[3] = Numero_Paquet%10;
-	}
-	if (Nombre_Info < 10)
-	{
-		Paquet[4] = 0;
-		Paquet[5] = Nombre_Info;
-	}
-	else
-	{
-		Paquet[4] = Nombre_Info/10;
-		Paquet[5] = Nombre_Info%10;
-	}
-	for (int i = 0;i<n_elements;i++)
-	{
-		Paquet[i+Longueur_Entete] = ptr[i];
-		Ecris_UART(ptr[i]);
-	}
 }
 
 void readData(int Type)
@@ -204,4 +174,57 @@ void readData(int Type)
 			break;
 		}
 	}
+}
+
+void Creer_Paquet(char * ptr, size_t n_elements)
+{
+	Numero_Paquet++;
+	
+	Paquet[2] = (n_elements + Longueur_Entete)/100;
+	Paquet[3] = ((n_elements + Longueur_Entete)%100)/10;
+	Paquet[4] = ((n_elements + Longueur_Entete)%100)%10;
+	
+	Paquet[5] = Numero_Paquet/10;
+	Paquet[6] = Numero_Paquet%10;
+
+	Paquet[7] = Nombre_Info/10;
+	Paquet[8] = Nombre_Info%10;
+
+	for (int i = 0;i<n_elements;i++)
+	{
+		Paquet[i+Longueur_Entete] = ptr[i];
+		Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
+	}
+	Decortiquer_Paquet(Paquet);
+}
+
+void Decortiquer_Paquet(char * Data)
+{
+	char Entete[Longueur_Entete];
+	char Donnee[200];
+
+	for (int i=0;i<Longueur_Entete;i++)
+	{
+		Entete[i] = *Data++;
+	}
+	
+	int Type_Donnee_Recu = Entete[0]*10 + Entete[1];
+	int Taille = Entete[2]*100 + Entete[3]*10 + Entete[4];
+	int No_Paquet = Entete[5]*10 + Entete[6];
+	int Tot_Paquet = Entete[7]*10 + Entete[8];
+
+	for (int i=0;i<Taille-Longueur_Entete;i++)
+	{
+		Donnee[i] = *Data++;
+	}
+
+	if (Type_Donnee_Recu == CREDENTIAL)
+	{
+		readData(Donnee[0]);
+	}
+	else
+	{
+		
+	}
+		
 }

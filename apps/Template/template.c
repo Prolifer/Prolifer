@@ -85,7 +85,7 @@ static void APP_TaskHandler(void)
   char receivedUart = 'O';
 
   //receivedUart = Lis_UART();  
-  if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
+  /*if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
   {
 	  Ecris_UART(receivedUart);	//envoie l'echo du caractere recu par l'UART
 
@@ -94,7 +94,7 @@ static void APP_TaskHandler(void)
 		uint8_t demonstration_string[128] = "123456789A"; //data packet bidon
 		Ecris_Wireless(demonstration_string, 10); //envoie le data packet; nombre d'éléments utiles du paquet à envoyer
 		}
-  }
+  }*/
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
@@ -133,20 +133,20 @@ static void APP_TaskHandler(void)
 int main(void)
 {
 	int User = 2;
-	PORTB &= ~(1 << 4); // Turn on LED
-	PORTB |= 0x10; //Turn off LED
+	//while(PINE & 0x10); // wait for user to press start button (SW0)
+	//PORTB &= ~(1 << 4); // Turn on LED
+	//PORTB |= 0x10; //Turn off LED
 	SYS_Init();
 	//Timer_Init();
 	Board_Init();
-   
-
-   
-  //while (1)
-  //{
-    //PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-    //APP_TaskHandler(); //l'application principale roule ici
-	//readData(User);
-  //}
+   	readData(User);
+	   
+  while (1)
+  {
+    PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+    APP_TaskHandler(); //l'application principale roule ici
+	
+  }
   
     return 0;
 }
@@ -156,11 +156,11 @@ int main(void)
 *****************************************************************************/
 void SYS_Init(void)
 {
-receivedWireless = 0;
-wdt_disable(); 
-init_UART();
-PHY_Init(); //initialise le wireless
-PHY_SetRxState(1); //TRX_CMD_RX_ON
+	receivedWireless = 0;
+	wdt_disable(); 
+	init_UART();
+	PHY_Init(); //initialise le wireless
+	PHY_SetRxState(1); //TRX_CMD_RX_ON
 }
 //
 
@@ -183,7 +183,6 @@ char Lis_UART(void)
 {
 
 char data = 0; 
-
 
 	if(UCSR1A & (0x01 << RXC1))
 	{
