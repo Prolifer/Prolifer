@@ -7,14 +7,17 @@
 
 #include "gui.h"
 
+#define READ_STRING_ARRAY_LENGTH 101
+#define ASCII_CARRIAGE_RETURN (char)10
+#define ASCII_NULL (char)0
+
 //Global variables
-char c_buffer = '\0';
 char s_buffer[READ_STRING_ARRAY_LENGTH] = "\0";
 
 //Repetitive functions
 void printString(char* s){
 	char* buff = s;
-	while( *buff != (char)0 || *buff != '\0' ){
+	while( *buff != (char)0){
 			UDR1 = *buff++;
 			while(!(UCSR1A & (0x01 << UDRE1)));
 	}
@@ -29,36 +32,36 @@ void printSeparator(){
 	printString("\n\r**********************************************************************\n\r");
 }
 
-void readChar(){
-	c_buffer = '\0';
-	parseToCharBuffer(c_buffer);
+char readChar(){
+	char c_buffer = ASCII_NULL;
+	return parseToCharBuffer(c_buffer);
 }
 
-//TODO: Correct the function to make it act as a scanf(), gets(), etc.
-void parseToCharBuffer(char c_buffer){
-	char s[READ_CHAR_ARRAY_LENGTH] = "\0";
-	int i = 0;
-	
-	//TODO: Probably add something to clear buffers to assure correct buffing
-	
-	while(s[READ_CHAR_ARRAY_LENGTH - 1] != '\r'){
+char parseToCharBuffer(char c_buffer){
+	while(c_buffer == ASCII_NULL){
 		if(UCSR1A & (0x01 << RXC1))	{c_buffer = UDR1;}
-		if(c_buffer != 0){
-			s[i] = c_buffer;
-			//TODO: Probably add something to clear buffers to assure correct buffing
-			i++;
-			if(i >= READ_CHAR_ARRAY_LENGTH){ i = 0;}
-		}
 	}
+	return c_buffer;
 }
 
-void readString(){
-		memset(s_buffer, 0, sizeof(s_buffer));
-		parseToStringBuffer(s_buffer);
-}
-
-//TODO: Correct the function to make it act as a scanf(), gets(), etc.
-void parseToStringBuffer(char* s_buffer){
+char* readString(){
+	//char c_buffer;
+	//memset(s_buffer, 0, sizeof(s_buffer));
+	//int i = 0;
+	//
+	//while(i < (READ_STRING_ARRAY_LENGTH - 1) || (c_buffer != (char)10 && c_buffer != (char)13)){
+		//c_buffer = ASCII_NULL;
+		//c_buffer = readChar();
+		//if(c_buffer != (char)0 && c_buffer != (char)10 && c_buffer != (char)13){ 
+			//s_buffer[i] = c_buffer;
+			//i++;
+		//}
+	//}
+	//
+	//return s_buffer;
+	
+	
+	memset(s_buffer, 0, sizeof(s_buffer));
 	char  c = '\0';
 	int i = 0;
 	
@@ -74,7 +77,10 @@ void parseToStringBuffer(char* s_buffer){
 		}
 	}
 	s_buffer[READ_STRING_ARRAY_LENGTH - 1] = '\0';
+	
+	return s_buffer;
 }
+
 
 //GUI
 bool openingMenu(){
@@ -87,22 +93,22 @@ bool openingMenu(){
 		printString("SELECT OPTION: \n\r\t1 - OPEN SESSION \n\r\t2 - EXIT");
 		printString("\n\r");
 		printString("OPTION : ");
-		readChar();
-		option = c_buffer;
-		
+		option = readChar();
+
 		switch (option)
 		{
 			case '1':
 				isSessionOpened = openingSession();
 				break;
 			case '2':
+				printString("\n\r\n\rEXITING ...\n\r\n\r");
 				return false;
 				break;
 			default:
 				break;
 		}
 	}
-	return false;
+	return true;
 }
 
 bool openingSession(){
@@ -112,16 +118,20 @@ bool openingSession(){
 		int tries = 3;
 		while(tries > 0){
 			printSeparator();
-			printString("\n\rOPEN SESSION\n\r");
+			printString("\n\r\t--OPEN SESSION--\n\r");
 			printString("\n\r\tENTER USERNAME : ");
-			readString();
-			username = s_buffer;
+			username = readString();
 			printString("\n\r");
 			printString("\n\r\tENTER PASSWORD : ");
-			readString();
-			password = s_buffer;
+			password = readString();
 			printSeparator();
-			if(isUserExisting(username,password)){ return true;}
+			
+			printString("\n");
+			printString(username);
+			printString("\n");
+			printString(password);
+			
+			if(identifyUser(username,password)){ return true;}
 				
 			tries--;
 		}

@@ -26,7 +26,8 @@ void Ecris_UART(char data)
 }
 
 //User ID
-bool isUserExisting(char* username, char* password){
+bool identifyUser(char* username, char* password){
+	printString("\n\r\n\rIDENTIFYING USER...");
 	//TODO : Implement logic with dummy
 	return false;
 }

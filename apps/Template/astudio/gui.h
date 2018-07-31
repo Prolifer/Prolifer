@@ -15,18 +15,14 @@
 #include "phy.h"
 #include "user.h"
 
-#define READ_STRING_ARRAY_LENGTH 101
-#define READ_CHAR_ARRAY_LENGTH 2
-
 //Repetitive functions
 void printString(char* s);
 void printGuiHeaders();
 void printSeparator();
 
-void readChar();
-void parseToCharBuffer(char c); //TODO: Correct the function to make it act as a scanf(), getchar(), etc.
-void readString();
-void parseToStringBuffer(char* s);//TODO: Correct the function to make it act as a (f)scanf(), gets(), etc.
+char readChar();
+char parseToCharBuffer(char c);
+char* readString();
 
 //GUI
 bool openingMenu();
