@@ -18,12 +18,12 @@
 	//FINANCIAL,
 	//ALL}; 
 	
-enum Credential{
+typedef enum cred{
 	NOTHING,
 	CIVILIAN,
 	PROFESSIONAL,
 	AUTHORITARIAN
-	} User_Type;
+	} Credential;
 	
 enum Information{
 	PRENOM,
@@ -41,8 +41,12 @@ enum Information{
 	COMMENTAIRE,
 	GROUPE_SANGUIN,
 	END,
-	CREDENTIAL
+	CREDENTIAL,
+	ERROR
 } Access[20];
+
+//Global variables
+Credential User_Type;
 
 //Definitions of terms :
 //Target:	Person or entity which we try to obtain infos from.

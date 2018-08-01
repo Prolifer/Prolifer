@@ -10,25 +10,11 @@
 #include "phy.h"
 #include "Timer.h"
 #include <string.h>
+#include "dummies.h"
 
 #define Longueur_Paquet 200
-#define Longueur_Entete 9
+#define Longueur_Entete 11
 
-char Nom[] = "Sylvain-Cameron";
-char Prenom[] = "Alexandre";
-char Date_Naissance[] = "1994-04-06";
-char Adresse[] = "2145 Rue Galt Ouest";
-char Appartement[] = "211";
-char Ville[] = "Sherbrooke";
-char Pays[] = "Canada";
-char Province[] = "Québec";
-char Code_Postale[] = "J1K1K3";
-char Soin_Particulier[] = "";
-char Medicament[] = "";
-char Maladie[] = "";
-char Commentaire[] = "";
-char Groupe_Sanguin[] = "";
-char End[] = "End";
 char Paquet[Longueur_Paquet];
 int Nombre_Info = 0;
 int Numero_Paquet = 0;
@@ -47,7 +33,7 @@ bool identifyUser(char* username, char* password){
 }
 
 Credential readSelfCredential(){
-	return 
+	return AUTHORITARIAN;
 }
 
 void readSelfData(int Type)
@@ -66,7 +52,7 @@ void readSelfData(int Type)
 		Access[6] = PAYS;
 		Access[7] = CODE_POSTAL;
 		Access[8] = END;
-		Nombre_Info = 8;
+		Nombre_Info = 9;
 	}
 	else if (User_Type == PROFESSIONAL || User_Type == AUTHORITARIAN )
 	{
@@ -84,11 +70,13 @@ void readSelfData(int Type)
 		Access[11] = COMMENTAIRE;
 		Access[12] = GROUPE_SANGUIN;
 		Access[13] = END;
-		Nombre_Info = 13;
+		Nombre_Info = 14;
 	}
 	else
 	{
-		Access[0] = END;
+		Access[0] = ERROR;
+		Access[1] = END;
+		Nombre_Info = 2;
 	}
 	
 	size_t N_Elements = 0;
@@ -96,8 +84,10 @@ void readSelfData(int Type)
 	for(int i=0;i<sizeof(Access)/sizeof(Access[0]);i++)
 	{
 		memset(Paquet, '\0', Longueur_Paquet);
-		Paquet[0] = Access[i]/10;
-		Paquet[1] = Access[i]%10;
+		Paquet[0] = 'P';
+		Paquet[1] = '3';
+		Paquet[2] = Access[i]/10;
+		Paquet[3] = Access[i]%10;
 		switch(Access[i])
 		{
 			case PRENOM :
@@ -170,6 +160,11 @@ void readSelfData(int Type)
 			Creer_Paquet(Groupe_Sanguin,N_Elements);
 			break;
 			
+			case ERROR :
+			N_Elements = sizeof(Error) / sizeof(Error[0]);
+			Creer_Paquet(Error,N_Elements);
+			break;
+			
 			case END :
 			N_Elements = sizeof(End) / sizeof(End[0]);
 			Creer_Paquet(End,N_Elements);
@@ -185,22 +180,21 @@ void Creer_Paquet(char * ptr, size_t n_elements)
 {
 	Numero_Paquet++;
 	
-	Paquet[2] = (n_elements + Longueur_Entete)/100;
-	Paquet[3] = ((n_elements + Longueur_Entete)%100)/10;
-	Paquet[4] = ((n_elements + Longueur_Entete)%100)%10;
+	Paquet[4] = (n_elements + Longueur_Entete)/100;
+	Paquet[5] = ((n_elements + Longueur_Entete)%100)/10;
+	Paquet[6] = ((n_elements + Longueur_Entete)%100)%10;
 	
-	Paquet[5] = Numero_Paquet/10;
-	Paquet[6] = Numero_Paquet%10;
+	Paquet[7] = Numero_Paquet/10;
+	Paquet[8] = Numero_Paquet%10;
 
-	Paquet[7] = Nombre_Info/10;
-	Paquet[8] = Nombre_Info%10;
+	Paquet[9] = Nombre_Info/10;
+	Paquet[10] = Nombre_Info%10;
 
 	for (int i = 0;i<n_elements;i++)
 	{
 		Paquet[i+Longueur_Entete] = ptr[i];
-		Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
 	}
-	Decortiquer_Paquet(Paquet);
+	Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
 }
 
 void Decortiquer_Paquet(char * Data)
@@ -212,27 +206,44 @@ void Decortiquer_Paquet(char * Data)
 	{
 		Entete[i] = *Data++;
 	}
-	
-	int Type_Donnee_Recu = Entete[0]*10 + Entete[1];
-	int Taille = Entete[2]*100 + Entete[3]*10 + Entete[4];
-	int No_Paquet = Entete[5]*10 + Entete[6];
-	int Tot_Paquet = Entete[7]*10 + Entete[8];
 
-	for (int i=0;i<Taille-Longueur_Entete;i++)
+	if(Entete[0] == 'P' && Entete[1] == '3')
 	{
-		Donnee[i] = *Data++;
-	}
+		//PORTB &= ~(1 << 4); // Turn on LED
+		//while(PINE & 0x10); // wait for user to press start button (SW0)
+		//PORTB |= 0x10; //Turn off LED
+		int Type_Donnee_Recu = Entete[2]*10 + Entete[3];
+		int Taille = Entete[4]*100 + Entete[5]*10 + Entete[6];
+		int No_Paquet = Entete[7]*10 + Entete[8];
+		int Tot_Paquet = Entete[9]*10 + Entete[10];
 
-	if (Type_Donnee_Recu == CREDENTIAL)
-	{
-		readSelfData(Donnee[0]);
-	}
-	else
-	{
-		
-	}
-		
+		for (int i=0;i<Taille-Longueur_Entete;i++)
+		{
+			Donnee[i] = *Data++;
+		}
+
+		if (Type_Donnee_Recu == CREDENTIAL)
+		{
+			if (Donnee[1] == 'R')
+			{
+				readData(Donnee[0]);
+			}
+			else if (Donnee[1] == 'W' && Donnee[0] == AUTHORITARIAN)
+			{
+				
+			}
+			else
+			{
+				readData(ERROR);
+			}
+		}
+		else
+		{
+			
+		}	
+	}		
 }
+
 
 void requestTargetAllID(){
 	if(readSelfCredential() == CIVILIAN){

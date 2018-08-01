@@ -82,7 +82,7 @@ PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier
 *****************************************************************************/
 static void APP_TaskHandler(void)
 {
-  char receivedUart = 'O';
+  //char receivedUart = 'O';
 
   //receivedUart = Lis_UART();  
   /*if(receivedUart)		//est-ce qu'un caractere a été recu par l'UART?
@@ -98,33 +98,9 @@ static void APP_TaskHandler(void)
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	char buf[196];
-
-//si quelqu'un a une méthode plus propre / mieux intégrée à proposer pour faire des "printf" avec notre fonction Ecris_UART, je veux bien l'entendre! 
-	sprintf( buf, "\n\rnew trame! size: %d, RSSI: %ddBm\n\r", ind.size, ind.rssi );
-	char *ptr = buf;
-	while( *ptr != (char)0 )
-		Ecris_UART( *ptr++ );
-		
-	sprintf( buf, "contenu: ");
-	ptr = buf;
-	while( *ptr != (char)0 )
-		Ecris_UART( *ptr++ );
-
-	ptr = ind.data;
-	char i = 0;
-	while( i < ind.size )
-	{
-		Ecris_UART( *ptr++ );
-		i++;
-	}
-
-	sprintf( buf, "\n\r");
-	ptr = buf;
-	while( *ptr != (char)0 )
-		Ecris_UART( *ptr++ );
+	 Decortiquer_Paquet(ind.data);
 	
-	receivedWireless = 0; 
+	 receivedWireless = 0; 
   }
 }
 
@@ -132,13 +108,10 @@ static void APP_TaskHandler(void)
 *****************************************************************************/
 int main(void)
 {
-	int User = 2;
-	//while(PINE & 0x10); // wait for user to press start button (SW0)
-	//PORTB &= ~(1 << 4); // Turn on LED
-	//PORTB |= 0x10; //Turn off LED
 	SYS_Init();
 	//Timer_Init();
 	Board_Init();
+
    	//readData(User);
 	   
   //while (1)
