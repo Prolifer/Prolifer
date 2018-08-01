@@ -15,6 +15,13 @@
 #define Longueur_Paquet 200
 #define Longueur_Entete 11
 
+//Global variables
+Credential ClientCredential;
+UserProfil up = {
+	.username = "",
+	.password = "",
+	.credential = NOTHING
+} ;
 char Paquet[Longueur_Paquet];
 int Nombre_Info = 0;
 int Numero_Paquet = 0;
@@ -29,19 +36,17 @@ void Ecris_UART(char data)
 bool identifyUser(char* username, char* password){
 	printString("\n\r\n\rIDENTIFYING USER...");
 	//TODO : Implement logic with dummy
+	
+	
 	return false;
-}
-
-Credential readSelfCredential(){
-	return AUTHORITARIAN;
 }
 
 void readSelfData(int Type)
 {
 	Nombre_Info = 0;
-	User_Type = Type;
+	ClientCredential = Type;
 	
-	if (User_Type == CIVILIAN)
+	if (ClientCredential == CIVILIAN)
 	{
 		Access[0] = PRENOM;
 		Access[1] = NOM;
@@ -54,7 +59,7 @@ void readSelfData(int Type)
 		Access[8] = END;
 		Nombre_Info = 9;
 	}
-	else if (User_Type == PROFESSIONAL || User_Type == AUTHORITARIAN )
+	else if (ClientCredential == PROFESSIONAL || ClientCredential == AUTHORITARIAN )
 	{
 		Access[0] = PRENOM;
 		Access[1] = NOM;
@@ -83,91 +88,90 @@ void readSelfData(int Type)
 	
 	for(int i=0;i<sizeof(Access)/sizeof(Access[0]);i++)
 	{
+		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
-		Paquet[0] = 'P';
-		Paquet[1] = '3';
 		Paquet[2] = Access[i]/10;
 		Paquet[3] = Access[i]%10;
 		switch(Access[i])
 		{
 			case PRENOM :
 			N_Elements = sizeof(Prenom) / sizeof(Prenom[0]);
-			Creer_Paquet(Prenom,N_Elements);
+			SendPackage(Prenom,N_Elements);
 			break;
 			
 			case NOM :
 			N_Elements = sizeof(Nom) / sizeof(Nom[0]);
-			Creer_Paquet(Nom,N_Elements);
+			SendPackage(Nom,N_Elements);
 			break;
 			
 			case DATE_NAISSANCE :
 			N_Elements = sizeof(Date_Naissance) / sizeof(Date_Naissance[0]);
-			Creer_Paquet(Date_Naissance,N_Elements);
+			SendPackage(Date_Naissance,N_Elements);
 			break;
 			
 			case ADRESSE :
 			N_Elements = sizeof(Adresse) / sizeof(Adresse[0]);
-			Creer_Paquet(Adresse,N_Elements);
+			SendPackage(Adresse,N_Elements);
 			break;
 			
 			case APPARTEMENT :
 			N_Elements = sizeof(Appartement) / sizeof(Appartement[0]);
-			Creer_Paquet(Appartement,N_Elements);
+			SendPackage(Appartement,N_Elements);
 			break;
 			
 			case VILLE :
 			N_Elements = sizeof(Ville) / sizeof(Ville[0]);
-			Creer_Paquet(Ville,N_Elements);
+			SendPackage(Ville,N_Elements);
 			break;
 			
 			case PAYS :
 			N_Elements = sizeof(Pays) / sizeof(Pays[0]);
-			Creer_Paquet(Pays,N_Elements);
+			SendPackage(Pays,N_Elements);
 			break;
 			
 			case PROVINCE :
 			N_Elements = sizeof(Province) / sizeof(Province[0]);
-			Creer_Paquet(Province,N_Elements);
+			SendPackage(Province,N_Elements);
 			break;
 			
 			case CODE_POSTAL :
 			N_Elements = sizeof(Code_Postale) / sizeof(Code_Postale[0]);
-			Creer_Paquet(Code_Postale,N_Elements);
+			SendPackage(Code_Postale,N_Elements);
 			break;
 			
 			case SOIN_PARTICULIER :
 			N_Elements = sizeof(Soin_Particulier) / sizeof(Soin_Particulier[0]);
-			Creer_Paquet(Soin_Particulier,N_Elements);
+			SendPackage(Soin_Particulier,N_Elements);
 			break;
 			
 			case MEDICAMENT :
 			N_Elements = sizeof(Medicament) / sizeof(Medicament[0]);
-			Creer_Paquet(Medicament,N_Elements);
+			SendPackage(Medicament,N_Elements);
 			break;
 			
 			case MALADIE :
 			N_Elements = sizeof(Maladie) / sizeof(Maladie[0]);
-			Creer_Paquet(Maladie,N_Elements);
+			SendPackage(Maladie,N_Elements);
 			break;
 			
 			case COMMENTAIRE :
 			N_Elements = sizeof(Commentaire) / sizeof(Commentaire[0]);
-			Creer_Paquet(Commentaire,N_Elements);
+			SendPackage(Commentaire,N_Elements);
 			break;
 			
 			case GROUPE_SANGUIN :
 			N_Elements = sizeof(Groupe_Sanguin) / sizeof(Groupe_Sanguin[0]);
-			Creer_Paquet(Groupe_Sanguin,N_Elements);
+			SendPackage(Groupe_Sanguin,N_Elements);
 			break;
 			
 			case ERROR :
 			N_Elements = sizeof(Error) / sizeof(Error[0]);
-			Creer_Paquet(Error,N_Elements);
+			SendPackage(Error,N_Elements);
 			break;
 			
 			case END :
 			N_Elements = sizeof(End) / sizeof(End[0]);
-			Creer_Paquet(End,N_Elements);
+			SendPackage(End,N_Elements);
 			i = sizeof(Access)/sizeof(Access[0]);
 			
 			default :
@@ -176,9 +180,11 @@ void readSelfData(int Type)
 	}
 }
 
-void Creer_Paquet(char * ptr, size_t n_elements)
+void SendPackage(char * ptr, size_t n_elements)
 {
 	Numero_Paquet++;
+	Paquet[0] = 'P';
+	Paquet[1] = '3';
 	
 	Paquet[4] = (n_elements + Longueur_Entete)/100;
 	Paquet[5] = ((n_elements + Longueur_Entete)%100)/10;
@@ -195,6 +201,7 @@ void Creer_Paquet(char * ptr, size_t n_elements)
 		Paquet[i+Longueur_Entete] = ptr[i];
 	}
 	Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
+	printString("\n\rPACKAGE SENT...\n\r");
 }
 
 void Decortiquer_Paquet(char * Data)
@@ -245,13 +252,13 @@ void Decortiquer_Paquet(char * Data)
 }
 
 void requestTargetAllID(){
-	if(readSelfCredential() == CIVILIAN){
-		
-	}
-	else if(readSelfCredential() == PROFESSIONAL || readSelfCredential() == AUTHORITARIAN)
-	{
-		
+	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
+		Numero_Paquet = 0;
+		memset(Paquet, '\0', Longueur_Paquet);
+		Paquet[2] = '0';
+		Paquet[3] = (char)CREDENTIAL;
+		SendPackage((char*)up.credential, sizeof(up.credential));
 	}
 	else
-		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW\n\r");
+		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
 }

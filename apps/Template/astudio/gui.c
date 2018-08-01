@@ -7,7 +7,9 @@
 
 #include "gui.h"
 
+//Definitions
 #define READ_STRING_ARRAY_LENGTH 101
+	//ASCII CODE
 #define ASCII_CARRIAGE_RETURN (char)10
 #define ASCII_NULL (char)0
 

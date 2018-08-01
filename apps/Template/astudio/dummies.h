@@ -32,5 +32,4 @@ char Groupe_Sanguin[] = "";
 
 //TODO: Create a AUTHORITARIAN DUMMY
 
-
 #endif /* DUMMIES_H_ */

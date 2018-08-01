@@ -10,6 +10,10 @@
 
 #include <stdbool.h>
 #include <stddef.h>
+#include "gui.h"
+
+//Definitions
+#define READ_STRING_ARRAY_LENGTH 101
 
 //TODO: if time , iteration to implement
 //enum IDType{PUBLIC,
@@ -18,14 +22,14 @@
 	//FINANCIAL,
 	//ALL}; 
 	
-typedef enum cred{
+typedef enum Credentials{
 	NOTHING,
 	CIVILIAN,
 	PROFESSIONAL,
 	AUTHORITARIAN
 	} Credential;
 	
-enum Information{
+enum DataTypeHeader{
 	PRENOM,
 	NOM,
 	DATE_NAISSANCE,
@@ -45,21 +49,23 @@ enum Information{
 	ERROR
 } Access[20];
 
-//Global variables
-Credential User_Type;
-
-//Definitions of terms :
-//Target:	Person or entity which we try to obtain infos from.
-//			Target's functions usually cannot be used by normal
-//			civilians, but more by professional and authoritarian.
+typedef struct UserProfils{
+	char username[READ_STRING_ARRAY_LENGTH];
+	char password[READ_STRING_ARRAY_LENGTH];
+	char credential;
+} UserProfil;
 
 void Ecris_UART(char data);
 
 bool identifyUser();
-Credential readSelfCredential();
 void readSelfData(int Type);
-void Creer_Paquet(char * ptr, size_t n_elements);
+void SendPackage(char * ptr, size_t n_elements);
 void Decortiquer_Paquet(char * Data);
+
+//Definition of terms :
+//Target:	Person or entity which we try to obtain infos from.
+//			Target's functions usually cannot be used by normal
+//			civilians, but more by professional and authoritarian.
 
 //Read  //TODO: Implement those functions, if time
 void requestTargetAllID();
