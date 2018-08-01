@@ -99,7 +99,7 @@ static void APP_TaskHandler(void)
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
 	 Decortiquer_Paquet(ind.data);
-	
+
 	 receivedWireless = 0; 
   }
 }

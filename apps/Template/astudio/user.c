@@ -244,8 +244,16 @@ void Decortiquer_Paquet(char * Data)
 				readSelfData(ERROR);
 			}
 		}
+		else if (Type_Donnee_Recu == ACKNOWLEDGE)
+		{
+			if (Donnee[0] == 'F')
+			{
+				Ecris_Wireless(Paquet,sizeof(Paquet));
+			}
+		}
 		else
 		{
+			
 			printString(Donnee);
 		}	
 	}		
@@ -255,8 +263,8 @@ void requestTargetAllID(){
 	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
-		Paquet[2] = '0';
-		Paquet[3] = (char)CREDENTIAL;
+		Paquet[2] = CREDENTIAL;
+		Paquet[3] = 'R';
 		SendPackage((char*)up.credential, sizeof(up.credential));
 	}
 	else

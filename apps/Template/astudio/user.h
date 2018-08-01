@@ -46,7 +46,8 @@ enum DataTypeHeader{
 	GROUPE_SANGUIN,
 	END,
 	CREDENTIAL,
-	ERROR
+	ERROR,
+	ACKNOWLEDGE
 } Access[20];
 
 typedef struct UserProfils{
