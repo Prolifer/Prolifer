@@ -46,7 +46,11 @@ bool identifyUser(char* username, char* password){
 	return false;
 }
 
-void readData(int Type)
+Credential readSelfCredential(){
+	return 
+}
+
+void readSelfData(int Type)
 {
 	Nombre_Info = 0;
 	User_Type = Type;
@@ -221,11 +225,23 @@ void Decortiquer_Paquet(char * Data)
 
 	if (Type_Donnee_Recu == CREDENTIAL)
 	{
-		readData(Donnee[0]);
+		readSelfData(Donnee[0]);
 	}
 	else
 	{
 		
 	}
 		
+}
+
+void requestTargetAllID(){
+	if(readSelfCredential() == CIVILIAN){
+		
+	}
+	else if(readSelfCredential() == PROFESSIONAL || readSelfCredential() == AUTHORITARIAN)
+	{
+		
+	}
+	else
+		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW\n\r");
 }
