@@ -104,6 +104,12 @@ static void APP_TaskHandler(void)
 		}
   }*/
   
+  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
+  {
+	 Decortiquer_Paquet(ind.data);
+
+	 receivedWireless = 0;
+  }
 
   UserProfil up = {
 	  .username = "",
@@ -111,19 +117,17 @@ static void APP_TaskHandler(void)
 	  .credential = AUTHORITARIAN
   } ;
   
-  
 	if(timer_flag == 1)
 		seconds++;
 	
 	if(seconds > 2)
-		writeTargetFirstName("Erdnaxela");
-		//requestTargetAllID(up);
-  
+		requestTargetAllID(up);
+		//writeTargetFirstName("Erdnaxela");
+		
 	if(seconds > 2){
 		seconds = 0;
 		timer_flag = 0;
 	}
-  
   
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 

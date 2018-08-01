@@ -46,7 +46,8 @@ enum DataTypeHeader{
 	GROUPE_SANGUIN,
 	END,
 	CREDENTIAL,
-	ERROR
+	ERROR,
+	ACKNOWLEDGE
 } Access[20];
 
 typedef struct UserProfils{
@@ -73,6 +74,7 @@ bool identifyUser();
 void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);
 void Decortiquer_Paquet(char * Data);
+void Acknowledge_Paquet();
 
 //Definition of terms :
 //Target:	Person or entity which we try to obtain infos from.
