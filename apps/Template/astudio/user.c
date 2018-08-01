@@ -244,7 +244,6 @@ void Decortiquer_Paquet(char * Data)
 	}		
 }
 
-
 void requestTargetAllID(){
 	if(readSelfCredential() == CIVILIAN){
 		
