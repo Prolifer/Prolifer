@@ -261,3 +261,20 @@ void requestTargetAllID(UserProfil up){
 	else
 		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
 }
+
+void writeTargetFirstName(UserProfil up, char* firstName){
+	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
+		Numero_Paquet = 0;
+		memset(Paquet, '\0', Longueur_Paquet);
+		Paquet[2] = PRENOM/10;
+		Paquet[3] = PRENOM%10;		
+		Nombre_Info = 1;
+		char* buffer_data = {up.credential, 'W'};
+		buffer_data =  strcat(buffer_data, firstName);
+		
+		SendPackage(buffer_data, sizeof(buffer_data));
+		buffer_data = NULL;
+	}
+	else
+		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
+}

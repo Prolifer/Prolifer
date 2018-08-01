@@ -87,6 +87,8 @@ void requestTargetHealthID();
 void requestTargetFinancialID();
 
 //Write (Reserved to Professional and Authoritarian) //TODO: Implement those functions, if time
+void writeTargetFirstName(UserProfil up, char* firstName);
+
 void writeTargetAllID();
 void writeTargetPublicID();
 void writeTargetPrivateID();

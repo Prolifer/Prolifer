@@ -79,6 +79,9 @@ uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet 
 
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
+//Use with timer flag and interrupt
+int seconds = 0;
+
 /*- Implementations --------------------------------------------------------*/
 
 // Put your function implementations here
@@ -108,17 +111,27 @@ static void APP_TaskHandler(void)
 	  .credential = AUTHORITARIAN
   } ;
   
-  requestTargetAllID(up);
+  
+	if(timer_flag == 1)
+		seconds++;
+	
+	if(seconds > 2)
+		writeTargetFirstName("Erdnaxela");
+		//requestTargetAllID(up);
+  
+	if(seconds > 2){
+		seconds = 0;
+		timer_flag = 0;
+	}
   
   
   
-  
-  //if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
-  //{
-	 //Decortiquer_Paquet(ind.data);
-	//
-	 //receivedWireless = 0; 
-  //}
+  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
+  {
+	 Decortiquer_Paquet(ind.data);
+	
+	 receivedWireless = 0; 
+  }
 }
 
 /*************************************************************************//**
@@ -126,7 +139,7 @@ static void APP_TaskHandler(void)
 int main(void)
 {
 	SYS_Init();
-	//Timer_Init();
+	Timer_Init();
 	Board_Init();
 	
 	//openingMenu();

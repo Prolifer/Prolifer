@@ -24,6 +24,7 @@ void printString(char* s){
 			while(!(UCSR1A & (0x01 << UDRE1)));
 	}
 	s = NULL;
+	buff = NULL;
 }
 
 void printGuiHeaders(){
@@ -137,5 +138,7 @@ bool openingSession(){
 				
 			tries--;
 		}
+		username = NULL;
+		password = NULL;
 		return false;
 }
