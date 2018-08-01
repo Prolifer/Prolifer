@@ -17,11 +17,7 @@
 
 //Global variables
 Credential ClientCredential;
-UserProfil up = {
-	.username = "",
-	.password = "",
-	.credential = NOTHING
-} ;
+
 char Paquet[Longueur_Paquet];
 int Nombre_Info = 0;
 int Numero_Paquet = 0;
@@ -251,13 +247,16 @@ void Decortiquer_Paquet(char * Data)
 	}		
 }
 
-void requestTargetAllID(){
+void requestTargetAllID(UserProfil up){
 	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
-		Paquet[2] = '0';
-		Paquet[3] = (char)CREDENTIAL;
-		SendPackage((char*)up.credential, sizeof(up.credential));
+		Paquet[2] = CREDENTIAL/10;
+		Paquet[3] = CREDENTIAL%10;		
+		Nombre_Info = 1;
+		char buffer_data[2] = {up.credential, 'R'};
+		
+		SendPackage(buffer_data, sizeof(buffer_data));
 	}
 	else
 		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
