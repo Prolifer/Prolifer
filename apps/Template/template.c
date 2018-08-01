@@ -58,6 +58,11 @@
 	
 /*- Types ------------------------------------------------------------------*/
 // Put your type definitions here
+typedef struct UserProfils{
+	char username[READ_STRING_ARRAY_LENGTH];
+	char password[READ_STRING_ARRAY_LENGTH];
+	char credential;
+} UserProfil;
 
 /*- Prototypes -------------------------------------------------------------*/
 // Put your function prototypes here
@@ -96,12 +101,33 @@ static void APP_TaskHandler(void)
 		}
   }*/
   
+<<<<<<< HEAD
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
 	 Decortiquer_Paquet(ind.data);
 
 	 receivedWireless = 0; 
   }
+=======
+
+  UserProfil up = {
+	  .username = "",
+	  .password = "",
+	  .credential = AUTHORITARIAN
+  } ;
+  
+  requestTargetAllID(up);
+  
+  
+  
+  
+  //if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
+  //{
+	 //Decortiquer_Paquet(ind.data);
+	//
+	 //receivedWireless = 0; 
+  //}
+>>>>>>> ea28295eec040bb70fc8466cc4adaa874665057d
 }
 
 /*************************************************************************//**

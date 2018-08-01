@@ -57,6 +57,11 @@ typedef struct UserProfils{
 } UserProfil;
 
 //Global variables
+//UserProfil up = {
+	//.username = "",
+	//.password = "",
+	//.credential = NOTHING
+//} ;
 
 //Definitions of terms :
 //Target:	Person or entity which we try to obtain infos from.
@@ -76,7 +81,7 @@ void Decortiquer_Paquet(char * Data);
 //			civilians, but more by professional and authoritarian.
 
 //Read  //TODO: Implement those functions, if time
-void requestTargetAllID();
+void requestTargetAllID(UserProfil up);
 void requestTargetPublicID();
 void requestTargetPrivateID();
 void requestTargetHealthID();
