@@ -55,10 +55,17 @@ typedef struct UserProfils{
 	char credential;
 } UserProfil;
 
+//Global variables
+
+//Definitions of terms :
+//Target:	Person or entity which we try to obtain infos from.
+//			Target's functions usually cannot be used by normal
+//			civilians, but more by professional and authoritarian.
+
 void Ecris_UART(char data);
 
 bool identifyUser();
-void readSelfData(int Type);
+void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);
 void Decortiquer_Paquet(char * Data);
 

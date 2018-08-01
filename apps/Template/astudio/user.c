@@ -41,10 +41,9 @@ bool identifyUser(char* username, char* password){
 	return false;
 }
 
-void readSelfData(int Type)
+void readSelfData(int ClientCredential)
 {
 	Nombre_Info = 0;
-	ClientCredential = Type;
 	
 	if (ClientCredential == CIVILIAN)
 	{
@@ -57,7 +56,7 @@ void readSelfData(int Type)
 		Access[6] = PAYS;
 		Access[7] = CODE_POSTAL;
 		Access[8] = END;
-		Nombre_Info = 9;
+		Nombre_Info = 8;
 	}
 	else if (ClientCredential == PROFESSIONAL || ClientCredential == AUTHORITARIAN )
 	{
@@ -75,18 +74,18 @@ void readSelfData(int Type)
 		Access[11] = COMMENTAIRE;
 		Access[12] = GROUPE_SANGUIN;
 		Access[13] = END;
-		Nombre_Info = 14;
+		Nombre_Info = 13;
 	}
 	else
 	{
 		Access[0] = ERROR;
 		Access[1] = END;
-		Nombre_Info = 2;
+		Nombre_Info = 1;
 	}
 	
 	size_t N_Elements = 0;
 	
-	for(int i=0;i<sizeof(Access)/sizeof(Access[0]);i++)
+	for(int i=0;i<=Nombre_Info;i++)
 	{
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
@@ -168,12 +167,11 @@ void readSelfData(int Type)
 			N_Elements = sizeof(Error) / sizeof(Error[0]);
 			SendPackage(Error,N_Elements);
 			break;
-			
+		
 			case END :
-			N_Elements = sizeof(End) / sizeof(End[0]);
-			SendPackage(End,N_Elements);
-			i = sizeof(Access)/sizeof(Access[0]);
-			
+			SendPackage("",0);
+			break;
+
 			default :
 			break;
 		}
@@ -216,9 +214,6 @@ void Decortiquer_Paquet(char * Data)
 
 	if(Entete[0] == 'P' && Entete[1] == '3')
 	{
-		//PORTB &= ~(1 << 4); // Turn on LED
-		//while(PINE & 0x10); // wait for user to press start button (SW0)
-		//PORTB |= 0x10; //Turn off LED
 		int Type_Donnee_Recu = Entete[2]*10 + Entete[3];
 		int Taille = Entete[4]*100 + Entete[5]*10 + Entete[6];
 		int No_Paquet = Entete[7]*10 + Entete[8];
@@ -228,25 +223,30 @@ void Decortiquer_Paquet(char * Data)
 		{
 			Donnee[i] = *Data++;
 		}
-
+		
 		if (Type_Donnee_Recu == CREDENTIAL)
 		{
-			if (Donnee[1] == 'R')
+			int Demandeur = Donnee[0];
+			char ReadorWrite = Donnee[1];
+			PORTB &= ~(1 << 4); // Turn on LED
+			while(PINE & 0x10); // wait for user to press start button (SW0)
+			PORTB |= 0x10; //Turn off LED
+			if (ReadorWrite == 'R')
 			{
-				readData(Donnee[0]);
+				readSelfData(Demandeur);
 			}
-			else if (Donnee[1] == 'W' && Donnee[0] == AUTHORITARIAN)
+			else if (ReadorWrite == 'W' && Donnee[0] == AUTHORITARIAN)
 			{
 				
 			}
 			else
 			{
-				readData(ERROR);
+				readSelfData(ERROR);
 			}
 		}
 		else
 		{
-			
+			printString(Donnee);
 		}	
 	}		
 }
