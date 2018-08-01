@@ -2,7 +2,7 @@
  * user.c
  *
  * Created: 7/26/2018 3:51:29 PM
- *  Author: antho
+ * Author: antho
  */ 
 
 #include "user.h"
@@ -21,6 +21,7 @@ Credential ClientCredential;
 char Paquet[Longueur_Paquet];
 int Nombre_Info = 0;
 int Numero_Paquet = 0;
+bool Ack_Ok = false;
 
 void Ecris_UART(char data)
 {
@@ -31,8 +32,7 @@ void Ecris_UART(char data)
 //User ID
 bool identifyUser(char* username, char* password){
 	printString("\n\r\n\rIDENTIFYING USER...");
-	//TODO : Implement logic with dummy
-	
+	//TODO : Implement logic with dummy	
 	
 	return false;
 }
@@ -171,6 +171,7 @@ void readSelfData(int ClientCredential)
 			default :
 			break;
 		}
+		Acknowledge_Paquet();
 	}
 }
 
@@ -195,6 +196,7 @@ void SendPackage(char * ptr, size_t n_elements)
 		Paquet[i+Longueur_Entete] = ptr[i];
 	}
 	Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
+	
 	printString("\n\rPACKAGE SENT...\n\r");
 }
 
@@ -240,25 +242,29 @@ void Decortiquer_Paquet(char * Data)
 				readSelfData(ERROR);
 			}
 		}
-		/*else if (Type_Donnee_Recu == ACKNOWLEDGE)
+		else if (Type_Donnee_Recu == ACKNOWLEDGE)
 		{
 			if (Donnee[0] == 'F')
 			{
 				Ecris_Wireless(Paquet,sizeof(Paquet));
 			}
-		}*/
+			else if (Donnee[0] == 'T')
+			{
+				Ack_Ok = true;
+			}
+		}
 		else
 		{
-			/*Numero_Paquet = 0;
+			Numero_Paquet = 0;
 			memset(Paquet, '\0', Longueur_Paquet);
 			Paquet[2] = ACKNOWLEDGE/10;
 			Paquet[3] = ACKNOWLEDGE%10;
 			char Ack = 'T';
 			Nombre_Info = 1;
-			SendPackage(Ack,sizeof(Ack));*/
+			SendPackage(Ack,sizeof(Ack));
 			printString(Donnee);
-		}	
-	}		
+		}
+	}
 }
 
 void requestTargetAllID(UserProfil up){
@@ -273,4 +279,17 @@ void requestTargetAllID(UserProfil up){
 	}
 	else
 		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
+}
+
+void Acknowledge_Paquet()
+{
+	while(Ack_Ok == false)
+	{
+		while (receivedWireless != 1)
+		{
+			PHY_TaskHandler();
+		}
+		Decortiquer_Paquet(ind.data);
+	}
+	Ack_Ok = false;
 }

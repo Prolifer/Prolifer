@@ -105,7 +105,7 @@ static void APP_TaskHandler(void)
   {
 	 Decortiquer_Paquet(ind.data);
 
-	 receivedWireless = 0; 
+	 receivedWireless = 0;
   }
 
   /*UserProfil up = {
