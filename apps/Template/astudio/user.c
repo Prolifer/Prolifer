@@ -249,7 +249,13 @@ void Decortiquer_Paquet(char * Data)
 		}
 		else
 		{
-			
+			Numero_Paquet = 0;
+			memset(Paquet, '\0', Longueur_Paquet);
+			Paquet[2] = ACKNOWLEDGE/10;
+			Paquet[3] = ACKNOWLEDGE%10;
+			char Ack = 'T';
+			Nombre_Info = 1;
+			SendPackage(Ack,sizeof(Ack))
 			printString(Donnee);
 		}	
 	}		

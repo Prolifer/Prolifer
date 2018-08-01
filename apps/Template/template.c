@@ -101,25 +101,20 @@ static void APP_TaskHandler(void)
 		}
   }*/
   
-<<<<<<< HEAD
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
 	 Decortiquer_Paquet(ind.data);
 
 	 receivedWireless = 0; 
   }
-=======
 
-  UserProfil up = {
+  /*UserProfil up = {
 	  .username = "",
 	  .password = "",
 	  .credential = AUTHORITARIAN
   } ;
   
-  requestTargetAllID(up);
-  
-  
-  
+  requestTargetAllID(up);*/
   
   //if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   //{
@@ -127,7 +122,6 @@ static void APP_TaskHandler(void)
 	//
 	 //receivedWireless = 0; 
   //}
->>>>>>> ea28295eec040bb70fc8466cc4adaa874665057d
 }
 
 /*************************************************************************//**
