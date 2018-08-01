@@ -25,7 +25,7 @@ typedef enum cred{
 	AUTHORITARIAN
 	} Credential;
 	
-enum Information{
+enum DataTypeHeader{
 	PRENOM,
 	NOM,
 	DATE_NAISSANCE,
@@ -46,7 +46,6 @@ enum Information{
 } Access[20];
 
 //Global variables
-Credential User_Type;
 
 //Definitions of terms :
 //Target:	Person or entity which we try to obtain infos from.

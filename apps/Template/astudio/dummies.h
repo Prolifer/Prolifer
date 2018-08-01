@@ -10,7 +10,6 @@
 #define DUMMIES_H_
 
 char Error[] = "Vous n'avez pas les droits pour écrire dans le bracelet";
-char End[] = "End";
 
 //TODO: Create a CIVILIAN DUMMY
 char Nom[] = "Sylvain-Cameron";
