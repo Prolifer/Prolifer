@@ -240,22 +240,22 @@ void Decortiquer_Paquet(char * Data)
 				readSelfData(ERROR);
 			}
 		}
-		else if (Type_Donnee_Recu == ACKNOWLEDGE)
+		/*else if (Type_Donnee_Recu == ACKNOWLEDGE)
 		{
 			if (Donnee[0] == 'F')
 			{
 				Ecris_Wireless(Paquet,sizeof(Paquet));
 			}
-		}
+		}*/
 		else
 		{
-			Numero_Paquet = 0;
+			/*Numero_Paquet = 0;
 			memset(Paquet, '\0', Longueur_Paquet);
 			Paquet[2] = ACKNOWLEDGE/10;
 			Paquet[3] = ACKNOWLEDGE%10;
 			char Ack = 'T';
 			Nombre_Info = 1;
-			SendPackage(Ack,sizeof(Ack))
+			SendPackage(Ack,sizeof(Ack));*/
 			printString(Donnee);
 		}	
 	}		
