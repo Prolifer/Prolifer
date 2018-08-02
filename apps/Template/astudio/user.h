@@ -12,6 +12,8 @@
 #include <stddef.h>
 #include "gui.h"
 
+
+
 //Definitions
 #define READ_STRING_ARRAY_LENGTH 101
 
@@ -56,6 +58,11 @@ typedef struct UserProfils{
 	char credential;
 } UserProfil;
 
+//UserProfil profils[1] = {
+	//{civ.username,civ.password,civ.credential}
+//};
+
+
 //Global variables
 //UserProfil up = {
 	//.username = "",
@@ -69,8 +76,8 @@ typedef struct UserProfils{
 //			civilians, but more by professional and authoritarian.
 
 void Ecris_UART(char data);
-
 bool identifyUser();
+void initPossibleProfils();
 void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);
 void Decortiquer_Paquet(char * Data);

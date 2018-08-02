@@ -14,7 +14,7 @@
 #define ASCII_NULL (char)0
 
 //Global variables
-char s_buffer[READ_STRING_ARRAY_LENGTH] = "\0";
+//char s_buffer[READ_STRING_ARRAY_LENGTH] = "\0";
 
 //Repetitive functions
 void printString(char* s){
@@ -47,7 +47,8 @@ char parseToCharBuffer(char c_buffer){
 	return c_buffer;
 }
 
-char* readString(){
+void readString(char* s_buffer){
+
 	//char c_buffer;
 	//memset(s_buffer, 0, sizeof(s_buffer));
 	//int i = 0;
@@ -64,24 +65,35 @@ char* readString(){
 	//return s_buffer;
 	
 	
-	memset(s_buffer, 0, sizeof(s_buffer));
-	char  c = '\0';
+	//memset(s_buffer, 0, sizeof(s_buffer));
+	//char  c = '\0';
+	//int i = 0;
+	//
+	////TODO: Probably add something to clear buffers to assure correct buffing
+	//
+	//while(s_buffer[i] != '\r' && i < (READ_STRING_ARRAY_LENGTH - 1)){
+		//if(UCSR1A & (0x01 << RXC1))	{c = UDR1;}
+		//if(c != 0){
+			//s_buffer[i] = c;
+			////TODO: Probably add something to clear buffers to assure correct buffing
+			//i++;
+		//}
+	//}	
+	//return s_buffer;
+	
+	memset(s_buffer, 0, READ_STRING_ARRAY_LENGTH*sizeof(char));
+	char temp = 0;
 	int i = 0;
-	
-	//TODO: Probably add something to clear buffers to assure correct buffing
-	
-	while(s_buffer[READ_STRING_ARRAY_LENGTH - 1] != '\r'){
-		if(UCSR1A & (0x01 << RXC1))	{c = UDR1;}
-		if(c != 0){
-			s_buffer[i] = c;
-			//TODO: Probably add something to clear buffers to assure correct buffing
+	while(i < (READ_STRING_ARRAY_LENGTH - 1) && temp != '\r'){
+		temp = readChar();
+		if(temp != 0){
+			*s_buffer = temp;
+			s_buffer++;
 			i++;
-			if(i >= READ_STRING_ARRAY_LENGTH){ i = 0;}
 		}
 	}
-	s_buffer[READ_STRING_ARRAY_LENGTH - 1] = '\0';
+	*s_buffer = '\0';
 	
-	return s_buffer;
 }
 
 
@@ -115,30 +127,26 @@ bool openingMenu(){
 }
 
 bool openingSession(){
-		char* username;
-		char* password;
+		char username[READ_STRING_ARRAY_LENGTH];
+		char password[READ_STRING_ARRAY_LENGTH];
 		 
 		int tries = 3;
 		while(tries > 0){
 			printSeparator();
 			printString("\n\r\t--OPEN SESSION--\n\r");
 			printString("\n\r\tENTER USERNAME : ");
-			username = readString();
+			readString(username);
 			printString("\n\r");
 			printString("\n\r\tENTER PASSWORD : ");
-			password = readString();
+			readString(password);
 			printSeparator();
 			
-			printString("\n");
-			printString(username);
-			printString("\n");
-			printString(password);
-			
-			if(identifyUser(username,password)){ return true;}
+			if(identifyUser(username,password)){ 
+				printString("\n\r\tUSER IDENTIFIED!\n\r");
+				return true;
+			}
 				
 			tries--;
 		}
-		username = NULL;
-		password = NULL;
 		return false;
 }

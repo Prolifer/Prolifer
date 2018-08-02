@@ -23,6 +23,28 @@ int Nombre_Info = 0;
 int Numero_Paquet = 0;
 bool Ack_Ok = false;
 
+UserProfil profils[3];
+
+const UserProfil civ = {
+	.username = "civ",
+	.password ="111",
+	.credential = CIVILIAN
+};
+
+const UserProfil pro = {
+	.username = "pro",
+	.password ="222",
+	.credential = PROFESSIONAL
+};
+
+const UserProfil aut = {
+	.username = "aut",
+	.password ="333",
+	.credential = AUTHORITARIAN
+};
+
+UserProfil* actualProfil = NULL;
+
 void Ecris_UART(char data)
 {
 	UDR1 = data;
@@ -32,10 +54,22 @@ void Ecris_UART(char data)
 //User ID
 bool identifyUser(char* username, char* password){
 	printString("\n\r\n\rIDENTIFYING USER...");
-	//TODO : Implement logic with dummy	
+	
+	initPossibleProfils();
+	
+	for(int i = 0; i < (sizeof(profils)/sizeof(UserProfil)); i++)
+		if(profils[i].username == username && profils[i].password == password)
+			return true;
 	
 	return false;
 }
+
+void initPossibleProfils(){
+	profils[1] = civ;
+	profils[2] = pro;
+	profils[3] = aut;
+}
+
 
 void readSelfData(int ClientCredential)
 {

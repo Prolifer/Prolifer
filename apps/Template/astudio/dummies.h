@@ -9,6 +9,9 @@
 #ifndef DUMMIES_H_
 #define DUMMIES_H_
 
+//Definitions
+#define READ_STRING_ARRAY_LENGTH 101
+
 char Error[] = "Vous n'avez pas les droits pour écrire dans le bracelet";
 
 //TODO: Create a CIVILIAN DUMMY

@@ -22,7 +22,7 @@ void printSeparator();
 
 char readChar();
 char parseToCharBuffer(char c);
-char* readString();
+void readString(char* s_buffer);
 
 //GUI
 bool openingMenu();
