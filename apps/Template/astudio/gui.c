@@ -86,7 +86,7 @@ void readString(char* s_buffer){
 	int i = 0;
 	while(i < (READ_STRING_ARRAY_LENGTH - 1) && temp != '\r'){
 		temp = readChar();
-		if(temp != 0){
+		if(temp != 0 && temp != 13 && temp != 10){
 			*s_buffer = temp;
 			s_buffer++;
 			i++;
@@ -141,7 +141,7 @@ bool openingSession(){
 			readString(password);
 			printSeparator();
 			
-			if(identifyUser(username,password)){ 
+			if(identifyUser(username, sizeof(username)/sizeof(char), password, sizeof(password)/sizeof(char))){ 
 				printString("\n\r\tUSER IDENTIFIED!\n\r");
 				return true;
 			}

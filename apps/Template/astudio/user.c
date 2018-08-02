@@ -43,7 +43,7 @@ const UserProfil aut = {
 	.credential = AUTHORITARIAN
 };
 
-UserProfil* actualProfil = NULL;
+int selfCredential = 0;
 
 void Ecris_UART(char data)
 {
@@ -52,22 +52,50 @@ void Ecris_UART(char data)
 }
 
 //User ID
-bool identifyUser(char* username, char* password){
-	printString("\n\r\n\rIDENTIFYING USER...");
+bool identifyUser(char* username, short sizeUsername, char* password, short sizePassword){
+	printString("\n\r\n\r\tIDENTIFYING USER...\n\r\n\r");
 	
 	initPossibleProfils();
+	int i = 0;
+	int y = 0;
+	char* buffer;
+	int isUsOk = 0;
+	int isPwOk = 0;
 	
-	for(int i = 0; i < (sizeof(profils)/sizeof(UserProfil)); i++)
-		if(profils[i].username == username && profils[i].password == password)
+	while(i < sizeof(profils)/sizeof(UserProfil)){
+		//Check username characters
+		while(y < sizeUsername && profils[i].username[y] == username[y]){
+			y++;
+		}
+		
+		//Valid username
+		if(y == sizeUsername){isUsOk = 1;}
+			
+		y = 0;
+			
+		//Check password characters
+		while(y < sizePassword && profils[i].password[y] == password[y]){
+			y++;
+		}
+		
+		//Valid password
+		if(y == sizePassword){isPwOk = 1;}
+		
+		if(isUsOk == 1 && isPwOk == 1){ 
+			selfCredential = profils[i].credential;
 			return true;
-	
+		}
+		
+		i++;
+	}
+
 	return false;
 }
 
 void initPossibleProfils(){
-	profils[1] = civ;
-	profils[2] = pro;
-	profils[3] = aut;
+	profils[0] = civ;
+	profils[1] = pro;
+	profils[2] = aut;
 }
 
 

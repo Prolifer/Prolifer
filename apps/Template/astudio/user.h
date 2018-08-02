@@ -55,7 +55,7 @@ enum DataTypeHeader{
 typedef struct UserProfils{
 	char username[READ_STRING_ARRAY_LENGTH];
 	char password[READ_STRING_ARRAY_LENGTH];
-	char credential;
+	int credential;
 } UserProfil;
 
 //UserProfil profils[1] = {
@@ -76,7 +76,7 @@ typedef struct UserProfils{
 //			civilians, but more by professional and authoritarian.
 
 void Ecris_UART(char data);
-bool identifyUser();
+bool identifyUser(char* username, short sizeUsername, char* password, short sizePassword);
 void initPossibleProfils();
 void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);

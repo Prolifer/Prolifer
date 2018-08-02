@@ -61,7 +61,7 @@
 typedef struct UserProfils{
 	char username[READ_STRING_ARRAY_LENGTH];
 	char password[READ_STRING_ARRAY_LENGTH];
-	char credential;
+	int credential;
 } UserProfil;
 
 /*- Prototypes -------------------------------------------------------------*/
