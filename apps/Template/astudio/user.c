@@ -25,6 +25,8 @@ bool Ack_Ok = false;
 
 UserProfil profils[3];
 
+static int selfCredential = 0;
+
 const UserProfil civ = {
 	.username = "civ",
 	.password ="111",
@@ -43,7 +45,7 @@ const UserProfil aut = {
 	.credential = AUTHORITARIAN
 };
 
-int selfCredential = 0;
+
 
 void Ecris_UART(char data)
 {
@@ -52,7 +54,7 @@ void Ecris_UART(char data)
 }
 
 //User ID
-bool identifyUser(char* username, short sizeUsername, char* password, short sizePassword){
+int identifyUser(char* username, short sizeUsername, char* password, short sizePassword){
 	printString("\n\r\n\r\tIDENTIFYING USER...\n\r\n\r");
 	
 	initPossibleProfils();
@@ -83,13 +85,13 @@ bool identifyUser(char* username, short sizeUsername, char* password, short size
 		
 		if(isUsOk == 1 && isPwOk == 1){ 
 			selfCredential = profils[i].credential;
-			return true;
+			return selfCredential;
 		}
 		
 		i++;
 	}
 
-	return false;
+	return 0;
 }
 
 void initPossibleProfils(){
@@ -341,14 +343,14 @@ void Acknowledge_Paquet(){
 	Ack_Ok = false;
 }
 
-void requestTargetAllID(UserProfil up){
-	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
+void requestTargetAllID(int cred){
+	if(cred == CIVILIAN || cred == PROFESSIONAL || cred == AUTHORITARIAN){
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
 		Paquet[2] = CREDENTIAL/10;
 		Paquet[3] = CREDENTIAL%10;		
 		Nombre_Info = 1;
-		char buffer_data[2] = {up.credential, 'R'};		
+		char buffer_data[2] = {(char)cred, 'R'};		
 		SendPackage(buffer_data, sizeof(buffer_data));
 	}
 	else

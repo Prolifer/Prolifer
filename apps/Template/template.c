@@ -81,6 +81,12 @@ PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier
 
 //Use with timer flag and interrupt
 int seconds = 0;
+int operating = 0;
+int choice = 0;
+
+int cred = 0;
+
+int oneTime = 1;
 
 /*- Implementations --------------------------------------------------------*/
 
@@ -108,34 +114,20 @@ static void APP_TaskHandler(void)
   {
 	 Decortiquer_Paquet(ind.data);
 
-	 receivedWireless = 0;
+	 //receivedWireless = 0;
+	 //choice = 0;
+	 //operating = 0;
   }
 
-  UserProfil up = {
-	  .username = "",
-	  .password = "",
-	  .credential = AUTHORITARIAN
-  } ;
+
   
 	if(timer_flag == 1)
 		seconds++;
 	
-	if(seconds > 2)
-		requestTargetAllID(up);
-		//writeTargetFirstName("Erdnaxela");
-		
-	if(seconds > 2){
-		seconds = 0;
-		timer_flag = 0;
+	if(oneTime == 1){
+		requestTargetAllID(cred);
+		oneTime = 0;
 	}
-  
-  
-  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
-  {
-	 Decortiquer_Paquet(ind.data);
-	
-	 receivedWireless = 0; 
-  }
 }
 
 /*************************************************************************//**
@@ -146,14 +138,22 @@ int main(void)
 	Timer_Init();
 	Board_Init();
 	
-	if(openingMenu()){
+
+	cred = openingMenu();
+	if(cred > 0){
+		//while(1){
+			//if(1)//credential)
+				//choice = askUserOperation();
+			//if(choice > 0)
+			//{	
+				//operating = 1;
+			//}
 		
-		
-		//while (1)
-		//{
-		//PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-		//APP_TaskHandler(); //l'application principale roule ici
-		//}
+			while (1)//credential == civilian)
+			{
+				PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+				APP_TaskHandler(); //l'application principale roule ici
+			}
 	}
 	
     return 0;

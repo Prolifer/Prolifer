@@ -98,11 +98,11 @@ void readString(char* s_buffer){
 
 
 //GUI
-bool openingMenu(){
-	bool isSessionOpened = false;
+int openingMenu(){
+	int cred = 0;
 	char option = '\0';
 	
-	while((option != '1' || option != '2') && !isSessionOpened){
+	while((option != '1' || option != '2') && cred != 0){
 		printGuiHeaders();
 		printString("\n\r");
 		printString("SELECT OPTION: \n\r\t1 - OPEN SESSION \n\r\t2 - EXIT");
@@ -113,20 +113,20 @@ bool openingMenu(){
 		switch (option)
 		{
 			case '1':
-				isSessionOpened = openingSession();
+				cred = openingSession();
 				break;
 			case '2':
 				printString("\n\r\n\rEXITING ...\n\r\n\r");
-				return false;
+				return 0;
 				break;
 			default:
 				break;
 		}
 	}
-	return true;
+	return 1;
 }
 
-bool openingSession(){
+int openingSession(){
 		char username[READ_STRING_ARRAY_LENGTH];
 		char password[READ_STRING_ARRAY_LENGTH];
 		 
@@ -141,12 +141,19 @@ bool openingSession(){
 			readString(password);
 			printSeparator();
 			
-			if(identifyUser(username, sizeof(username)/sizeof(char), password, sizeof(password)/sizeof(char))){ 
+			int cred = 0;
+			cred = identifyUser(username, sizeof(username)/sizeof(char), password, sizeof(password)/sizeof(char));
+			
+			if(cred > 0){ 
 				printString("\n\r\tUSER IDENTIFIED!\n\r");
-				return true;
+				return cred;
 			}
 				
 			tries--;
 		}
-		return false;
+		return 0;
+}
+
+int askUserOperation(){
+	
 }

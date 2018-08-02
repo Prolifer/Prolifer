@@ -76,7 +76,7 @@ typedef struct UserProfils{
 //			civilians, but more by professional and authoritarian.
 
 void Ecris_UART(char data);
-bool identifyUser(char* username, short sizeUsername, char* password, short sizePassword);
+int identifyUser(char* username, short sizeUsername, char* password, short sizePassword);
 void initPossibleProfils();
 void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);
@@ -89,7 +89,7 @@ void Acknowledge_Paquet();
 //			civilians, but more by professional and authoritarian.
 
 //Read  //TODO: Implement those functions, if time
-void requestTargetAllID(UserProfil up);
+void requestTargetAllID(int cred);
 void requestTargetPublicID();
 void requestTargetPrivateID();
 void requestTargetHealthID();

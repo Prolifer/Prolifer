@@ -25,8 +25,9 @@ char parseToCharBuffer(char c);
 void readString(char* s_buffer);
 
 //GUI
-bool openingMenu();
-bool openingSession();
+int openingMenu();
+int openingSession();
+int askUserOperation();
 
 
 
