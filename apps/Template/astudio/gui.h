@@ -9,12 +9,6 @@
 #ifndef GUI_H_
 #define GUI_H_
 
-#include <stdbool.h>
-#include <string.h>
-#include "sys.h"
-#include "phy.h"
-#include "user.h"
-
 //Repetitive functions
 void printString(char* s);
 void printGuiHeaders();

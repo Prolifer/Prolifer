@@ -5,7 +5,12 @@
  *  Author: antho
  */ 
 
+#include <stdbool.h>
+#include <string.h>
 #include "gui.h"
+#include "sys.h"
+#include "phy.h"
+#include "user.h"
 
 //Definitions
 #define READ_STRING_ARRAY_LENGTH 101

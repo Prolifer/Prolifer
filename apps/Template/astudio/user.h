@@ -10,7 +10,6 @@
 
 #include <stdbool.h>
 #include <stddef.h>
-#include "gui.h"
 
 //Definitions
 #define READ_STRING_ARRAY_LENGTH 101
@@ -29,7 +28,7 @@ typedef enum Credentials{
 	AUTHORITARIAN
 	} Credential;
 	
-enum DataTypeHeader{
+typedef enum DataTypes{
 	PRENOM,
 	NOM,
 	DATE_NAISSANCE,
@@ -47,8 +46,11 @@ enum DataTypeHeader{
 	END,
 	CREDENTIAL,
 	ERROR,
-	ACKNOWLEDGE
-} Access[20];
+	ACKNOWLEDGE,
+	DATA
+} DataType;
+
+DataType Access[20];
 
 typedef struct UserProfils{
 	char username[READ_STRING_ARRAY_LENGTH];
@@ -57,6 +59,7 @@ typedef struct UserProfils{
 } UserProfil;
 
 //Global variables
+
 //UserProfil up = {
 	//.username = "",
 	//.password = "",
@@ -72,9 +75,10 @@ void Ecris_UART(char data);
 
 bool identifyUser();
 void readSelfData(int ClientCredential);
-void SendPackage(char * ptr, size_t n_elements);
-void Decortiquer_Paquet(char * Data);
-void Acknowledge_Paquet();
+void sendPackage(char * ptr, size_t n_elements);
+DataType receivePackage(char * Data);
+void waitAknowledge();
+void sendAcknowledge();
 
 //Definition of terms :
 //Target:	Person or entity which we try to obtain infos from.
@@ -89,7 +93,7 @@ void requestTargetHealthID();
 void requestTargetFinancialID();
 
 //Write (Reserved to Professional and Authoritarian) //TODO: Implement those functions, if time
-void writeTargetFirstName(UserProfil up, char* firstName);
+//void writeTargetFirstName(UserProfil up, char* firstName);
 
 void writeTargetAllID();
 void writeTargetPublicID();

@@ -45,12 +45,13 @@
  */
 
 /*- Includes ---------------------------------------------------------------*/
+#include <stdio.h>
 #include "sys.h"
 #include "phy.h"
 #include "user.h"
 #include "gui.h"
 #include "Timer.h"
-#include <stdio.h>
+
 
 /*- Definitions ------------------------------------------------------------*/
 // Put your preprocessor definitions here
@@ -77,10 +78,21 @@ void Board_Init(void);
 uint8_t receivedWireless;	//cette variable deviendra 1 lorsqu'un nouveau paquet aura été recu via wireless (et copié dans "PHY_DataInd_t ind"
 							//il faut la mettre a 0 apres avoir géré le paquet; tout message recu via wireless pendant que cette variable est a 1 sera jeté
 
+bool hasToSendAcknowledge = false;
 PHY_DataInd_t ind; //cet objet contiendra les informations concernant le dernier paquet qui vient de rentrer
 
 //Use with timer flag and interrupt
-int seconds = 0;
+int milliseconds = 0;
+bool temp_flag = true;
+int nbAckToSend = 3;
+
+
+  UserProfil up = {
+	  .username = "",
+	  .password = "",
+	  .credential = AUTHORITARIAN
+  } ;
+
 
 /*- Implementations --------------------------------------------------------*/
 
@@ -103,39 +115,35 @@ static void APP_TaskHandler(void)
 		Ecris_Wireless(demonstration_string, 10); //envoie le data packet; nombre d'éléments utiles du paquet à envoyer
 		}
   }*/
-  
-  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
-  {
-	 Decortiquer_Paquet(ind.data);
 
-	 receivedWireless = 0;
-  }
-
-  UserProfil up = {
-	  .username = "",
-	  .password = "",
-	  .credential = AUTHORITARIAN
-  } ;
-  
-	if(timer_flag == 1)
-		seconds++;
-	
-	if(seconds > 2)
+	if(temp_flag){
 		requestTargetAllID(up);
+		temp_flag = false;
 		//writeTargetFirstName("Erdnaxela");
-		
-	if(seconds > 2){
-		seconds = 0;
-		timer_flag = 0;
 	}
-  
-  
-  if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
-  {
-	 Decortiquer_Paquet(ind.data);
-	
-	 receivedWireless = 0; 
-  }
+
+	if(receivedWireless && !hasToSendAcknowledge) //est-ce qu'un paquet a été recu sur le wireless? 
+	{
+		if(receivePackage(ind.data) == DATA)
+			hasToSendAcknowledge = 1;
+		receivedWireless = 0;
+	}
+
+	if(hasToSendAcknowledge == 1)
+	{
+		if(nbAckToSend > 0 && milliseconds >= 300){
+				sendAcknowledge();
+				nbAckToSend--;
+				milliseconds = 0;
+		}
+		else{
+			hasToSendAcknowledge = 0;
+			nbAckToSend = 3;
+		}
+	}
+
+	if(timer_flag == 1)
+		milliseconds++;
 }
 
 /*************************************************************************//**
@@ -145,9 +153,9 @@ int main(void)
 	SYS_Init();
 	Timer_Init();
 	Board_Init();
-	
+	printString("\n\rHEY LISTEN!\n\r");  
 	//openingMenu();
-	
+	 
 	while (1)
 	{
 		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu

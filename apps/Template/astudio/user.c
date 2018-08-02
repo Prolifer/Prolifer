@@ -5,11 +5,12 @@
  * Author: antho
  */ 
 
+#include <string.h>
 #include "user.h"
+#include "gui.h"
+#include "Timer.h"
 #include "sys.h"
 #include "phy.h"
-#include "Timer.h"
-#include <string.h>
 #include "dummies.h"
 
 #define Longueur_Paquet 200
@@ -91,91 +92,107 @@ void readSelfData(int ClientCredential)
 		{
 			case PRENOM :
 			N_Elements = sizeof(Prenom) / sizeof(Prenom[0]);
-			SendPackage(Prenom,N_Elements);
+			sendPackage(Prenom,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case NOM :
 			N_Elements = sizeof(Nom) / sizeof(Nom[0]);
-			SendPackage(Nom,N_Elements);
+			sendPackage(Nom,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case DATE_NAISSANCE :
 			N_Elements = sizeof(Date_Naissance) / sizeof(Date_Naissance[0]);
-			SendPackage(Date_Naissance,N_Elements);
+			sendPackage(Date_Naissance,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case ADRESSE :
 			N_Elements = sizeof(Adresse) / sizeof(Adresse[0]);
-			SendPackage(Adresse,N_Elements);
+			sendPackage(Adresse,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case APPARTEMENT :
 			N_Elements = sizeof(Appartement) / sizeof(Appartement[0]);
-			SendPackage(Appartement,N_Elements);
+			sendPackage(Appartement,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case VILLE :
 			N_Elements = sizeof(Ville) / sizeof(Ville[0]);
-			SendPackage(Ville,N_Elements);
+			sendPackage(Ville,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case PAYS :
 			N_Elements = sizeof(Pays) / sizeof(Pays[0]);
-			SendPackage(Pays,N_Elements);
+			sendPackage(Pays,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case PROVINCE :
 			N_Elements = sizeof(Province) / sizeof(Province[0]);
-			SendPackage(Province,N_Elements);
+			sendPackage(Province,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case CODE_POSTAL :
 			N_Elements = sizeof(Code_Postale) / sizeof(Code_Postale[0]);
-			SendPackage(Code_Postale,N_Elements);
+			sendPackage(Code_Postale,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case SOIN_PARTICULIER :
 			N_Elements = sizeof(Soin_Particulier) / sizeof(Soin_Particulier[0]);
-			SendPackage(Soin_Particulier,N_Elements);
+			sendPackage(Soin_Particulier,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case MEDICAMENT :
 			N_Elements = sizeof(Medicament) / sizeof(Medicament[0]);
-			SendPackage(Medicament,N_Elements);
+			sendPackage(Medicament,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case MALADIE :
 			N_Elements = sizeof(Maladie) / sizeof(Maladie[0]);
-			SendPackage(Maladie,N_Elements);
+			sendPackage(Maladie,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case COMMENTAIRE :
 			N_Elements = sizeof(Commentaire) / sizeof(Commentaire[0]);
-			SendPackage(Commentaire,N_Elements);
+			sendPackage(Commentaire,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case GROUPE_SANGUIN :
 			N_Elements = sizeof(Groupe_Sanguin) / sizeof(Groupe_Sanguin[0]);
-			SendPackage(Groupe_Sanguin,N_Elements);
+			sendPackage(Groupe_Sanguin,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 			
 			case ERROR :
 			N_Elements = sizeof(Error) / sizeof(Error[0]);
-			SendPackage(Error,N_Elements);
+			sendPackage(Error,N_Elements);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 		
 			case END :
-			SendPackage("",0);
+			sendPackage("",0);
+			printString("\n\rDATA SENT...\n\r");
 			break;
 
 			default :
 			break;
 		}
-		Acknowledge_Paquet();
+		waitAknowledge();
 	}
 }
 
-void SendPackage(char * ptr, size_t n_elements)
+void sendPackage(char * ptr, size_t n_elements)
 {
 	Numero_Paquet++;
 	Paquet[0] = 'P';
@@ -195,13 +212,10 @@ void SendPackage(char * ptr, size_t n_elements)
 	{
 		Paquet[i+Longueur_Entete] = ptr[i];
 	}
-	Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
-	
-	printString("\n\rPACKAGE SENT...\n\r");
+	Ecris_Wireless((uint8_t*)Paquet,n_elements + Longueur_Entete);
 }
 
-void Decortiquer_Paquet(char * Data)
-{
+DataType receivePackage(char * Data){
 	char Entete[Longueur_Entete];
 	char Donnee[200];
 
@@ -214,8 +228,8 @@ void Decortiquer_Paquet(char * Data)
 	{
 		int Type_Donnee_Recu = Entete[2]*10 + Entete[3];
 		int Taille = Entete[4]*100 + Entete[5]*10 + Entete[6];
-		int No_Paquet = Entete[7]*10 + Entete[8];
-		int Tot_Paquet = Entete[9]*10 + Entete[10];
+		//int No_Paquet = Entete[7]*10 + Entete[8];
+		//int Tot_Paquet = Entete[9]*10 + Entete[10];
 
 		for (int i=0;i<Taille-Longueur_Entete;i++)
 		{
@@ -241,42 +255,57 @@ void Decortiquer_Paquet(char * Data)
 			{
 				readSelfData(ERROR);
 			}
+			return CREDENTIAL;
 		}
 		else if (Type_Donnee_Recu == ACKNOWLEDGE)
 		{
 			if (Donnee[0] == 'F')
 			{
-				Ecris_Wireless(Paquet,sizeof(Paquet));
+				Ecris_Wireless((uint8_t*)Paquet,sizeof(Paquet));
 			}
 			else if (Donnee[0] == 'T')
 			{
 				Ack_Ok = true;
+				printString("\n\rPACKAGE AKNOWLEDGED!\n\r");
 			}
+			return ACKNOWLEDGE;
 		}
-		else
-		{
-			Numero_Paquet = 0;
-			memset(Paquet, '\0', Longueur_Paquet);
-			Paquet[2] = ACKNOWLEDGE/10;
-			Paquet[3] = ACKNOWLEDGE%10;
-			char Ack = 'T';
-			Nombre_Info = 1;
-			SendPackage(Ack,sizeof(Ack));
+		else{
+			printString("\n\r");
+			printString("DATA : ");
 			printString(Donnee);
+			printString("\n\r");
+			return DATA;
 		}
+		printString("\n\rERROR : P3 PACKAGE BUT CAN'T PROCESS\n\r");
+		return ERROR;
 	}
+	printString("\n\rDETECTED UNIDENTIFIED PACKAGE\n\r");
+	return ERROR;
 }
 
-void Acknowledge_Paquet(){
+void waitAknowledge(){
+	printString("\n\rWAITING AKNOWLEDGE...\n\r");
 	while(Ack_Ok == false)
 	{
 		while (receivedWireless != 1)
 		{
 			PHY_TaskHandler();
 		}
-		Decortiquer_Paquet(ind.data);
+		receivePackage(ind.data);
 	}
 	Ack_Ok = false;
+}
+
+void sendAcknowledge(){
+	Numero_Paquet = 0;
+	memset(Paquet, '\0', Longueur_Paquet);
+	Paquet[2] = ACKNOWLEDGE/10;
+	Paquet[3] = ACKNOWLEDGE%10;
+	char Ack[1] = "T";
+	Nombre_Info = 1;
+	sendPackage(Ack,sizeof(Ack));
+	printString("\n\rAKNOWLEDGE SENT...\n\r");
 }
 
 void requestTargetAllID(UserProfil up){
@@ -287,26 +316,27 @@ void requestTargetAllID(UserProfil up){
 		Paquet[3] = CREDENTIAL%10;		
 		Nombre_Info = 1;
 		char buffer_data[2] = {up.credential, 'R'};		
-		SendPackage(buffer_data, sizeof(buffer_data));
+		sendPackage(buffer_data, sizeof(buffer_data));
+		printString("\n\rREQUEST SENT...\n\r");
 	}
 	else
 		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
 }
 
-void writeTargetFirstName(UserProfil up, char* firstName){
-	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
-		Numero_Paquet = 0;
-		memset(Paquet, '\0', Longueur_Paquet);
-		Paquet[2] = PRENOM/10;
-		Paquet[3] = PRENOM%10;		
-		Nombre_Info = 1;
-		char* buffer_data = {up.credential, 'W'};
-		buffer_data =  strcat(buffer_data, firstName);
-		
-		SendPackage(buffer_data, sizeof(buffer_data));
-		buffer_data = NULL;
-	}
-	else
-		printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
-}
+//void writeTargetFirstName(UserProfil up, char* firstName){
+	//if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
+		//Numero_Paquet = 0;
+		//memset(Paquet, '\0', Longueur_Paquet);
+		//Paquet[2] = PRENOM/10;
+		//Paquet[3] = PRENOM%10;		
+		//Nombre_Info = 1;
+		//char* buffer_data = {up.credential, 'W'};
+		//buffer_data =  strcat(buffer_data, firstName);
+		//
+		//SendPackage(buffer_data, sizeof(buffer_data));
+		//buffer_data = NULL;
+	//}
+	//else
+		//printString("\n\r\tERROR : CRENDENTIAL LEVEL TOO LOW TO REQUEST\n\r");
+//}
 
