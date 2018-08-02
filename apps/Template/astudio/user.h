@@ -27,8 +27,8 @@
 typedef enum Credentials{
 	NOTHING,
 	CIVILIAN,
-	PROFESSIONAL,
-	AUTHORITARIAN
+	MEDECIN,
+	POLICIER
 	} Credential;
 	
 enum DataTypeHeader{
@@ -49,7 +49,13 @@ enum DataTypeHeader{
 	END,
 	CREDENTIAL,
 	ERROR,
-	ACKNOWLEDGE
+	ACKNOWLEDGE,
+	NUMERO_PERMIS,
+	NUMERO_PLAQUE,
+	NUMERO_ASSURANCE,
+	CLASSE,
+	CONDITION,
+	RESTRICTION
 } Access[20];
 
 typedef struct UserProfils{

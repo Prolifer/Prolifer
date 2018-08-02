@@ -111,7 +111,7 @@ static void APP_TaskHandler(void)
 	 receivedWireless = 0;
   }
 
-  UserProfil up = {
+ /* UserProfil up = {
 	  .username = "",
 	  .password = "",
 	  .credential = AUTHORITARIAN
@@ -135,7 +135,7 @@ static void APP_TaskHandler(void)
 	 Decortiquer_Paquet(ind.data);
 	
 	 receivedWireless = 0; 
-  }
+  }*/
 }
 
 /*************************************************************************//**
@@ -146,15 +146,15 @@ int main(void)
 	Timer_Init();
 	Board_Init();
 	
-	if(openingMenu()){
+	//if(openingMenu()){}
 		
 		
-		//while (1)
-		//{
-		//PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-		//APP_TaskHandler(); //l'application principale roule ici
-		//}
-	}
+		while (1)
+		{
+			PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+			APP_TaskHandler(); //l'application principale roule ici
+		}
+
 	
     return 0;
 }

@@ -24,11 +24,17 @@ char Ville[] = "Sherbrooke";
 char Pays[] = "Canada";
 char Province[] = "Québec";
 char Code_Postale[] = "J1K1K3";
-char Soin_Particulier[] = "";
-char Medicament[] = "";
-char Maladie[] = "";
+char Soin_Particulier[] = "Pas de massage cardiaque";
+char Medicament[] = "Concerta";
+char Maladie[] = "Diabète type 2";
 char Commentaire[] = "";
-char Groupe_Sanguin[] = "";
+char Groupe_Sanguin[] = "O+";
+char Numero_Permis[] = "A0000-000000-00";
+char Numero_Plaque[] = "J1K1K3";
+char Numero_Assurance[] = "ASSURANCENUMBER";
+char Classe[] = "5";
+char Condition[] = "A";
+char Restriction[] = "Interdit de conduire entre minuit et 5h";
 
 //TODO: Create a PROFESSIONAL DUMMY
 
