@@ -34,15 +34,15 @@ const UserProfil civ = {
 };
 
 const UserProfil pro = {
-	.username = "pro",
+	.username = "med",
 	.password ="222",
-	.credential = PROFESSIONAL
+	.credential = MEDECIN
 };
 
 const UserProfil aut = {
-	.username = "aut",
+	.username = "pol",
 	.password ="333",
-	.credential = AUTHORITARIAN
+	.credential = POLICIER
 };
 
 
@@ -55,7 +55,7 @@ void Ecris_UART(char data)
 
 //User ID
 int identifyUser(char* username, short sizeUsername, char* password, short sizePassword){
-	printString("\n\r\n\r\tIDENTIFYING USER...\n\r\n\r");
+	printString("\n\r\tIDENTIFYING USER...\n\r");
 	
 	initPossibleProfils();
 	int i = 0;
@@ -118,7 +118,7 @@ void readSelfData(int ClientCredential)
 		Access[8] = END;
 		Nombre_Info = 8;
 	}
-	else if (ClientCredential == PROFESSIONAL || ClientCredential == AUTHORITARIAN )
+	else if (ClientCredential == MEDECIN)
 	{
 		Access[0] = PRENOM;
 		Access[1] = NOM;
@@ -135,6 +135,24 @@ void readSelfData(int ClientCredential)
 		Access[12] = GROUPE_SANGUIN;
 		Access[13] = END;
 		Nombre_Info = 13;
+	}
+	else if (ClientCredential == POLICIER)
+	{
+		Access[0] = PRENOM;
+		Access[1] = NOM;
+		Access[2] = DATE_NAISSANCE;
+		Access[3] = ADRESSE;
+		Access[4] = APPARTEMENT;
+		Access[5] = VILLE;
+		Access[6] = PAYS;
+		Access[7] = CODE_POSTAL;
+		Access[8] = NUMERO_PERMIS;
+		Access[9] = NUMERO_PLAQUE;
+		Access[10] = NUMERO_ASSURANCE;
+		Access[11] = CLASSE;
+		Access[12] = CONDITION;
+		Access[13] = RESTRICTION;
+		Access[14] = END;
 	}
 	else
 	{
@@ -231,11 +249,41 @@ void readSelfData(int ClientCredential)
 			case END :
 			SendPackage("",0);
 			break;
-
+			
+			case NUMERO_PERMIS :
+			N_Elements = sizeof(Error) / sizeof(Error[0]);	
+			SendPackage(Error,N_Elements);
+			break;
+			
+			case NUMERO_PLAQUE :
+			N_Elements = sizeof(Numero_Plaque) / sizeof(Numero_Plaque[0]);
+			SendPackage(Error,N_Elements);
+			break;
+			
+			case NUMERO_ASSURANCE :
+			N_Elements = sizeof(Numero_Assurance) / sizeof(Numero_Assurance[0]);
+			SendPackage(Error,N_Elements);
+			break;
+			
+			case CLASSE :
+			N_Elements = sizeof(Classe) / sizeof(Classe[0]);
+			SendPackage(Error,N_Elements);
+			break;
+			
+			case CONDITION :
+			N_Elements = sizeof(Condition) / sizeof(Condition[0]);
+			SendPackage(Error,N_Elements);
+			break;
+			
+			case RESTRICTION :
+			N_Elements = sizeof(Restriction) / sizeof(Restriction[0]);
+			SendPackage(Error,N_Elements);
+			break;
+			
 			default :
 			break;
 		}
-		Acknowledge_Paquet();
+		//Acknowledge_Paquet();
 	}
 }
 
@@ -261,10 +309,12 @@ void SendPackage(char * ptr, size_t n_elements)
 	}
 	Ecris_Wireless(Paquet,n_elements + Longueur_Entete);
 	
-	printString("\n\rPACKAGE SENT...\n\r");
+	printString("\n\r\tPACKAGE SENT...\n\r");
+	printSeparator();
+	printString("\n\r");
 }
 
-void Decortiquer_Paquet(char * Data)
+int Decortiquer_Paquet(char * Data)
 {
 	char Entete[Longueur_Entete];
 	char Donnee[200];
@@ -297,7 +347,7 @@ void Decortiquer_Paquet(char * Data)
 			{
 				readSelfData(Demandeur);
 			}
-			else if (ReadorWrite == 'W' && Donnee[0] == AUTHORITARIAN)
+			else if (ReadorWrite == 'W' && Donnee[0] == POLICIER)
 			{
 				
 			}
@@ -306,7 +356,7 @@ void Decortiquer_Paquet(char * Data)
 				readSelfData(ERROR);
 			}
 		}
-		else if (Type_Donnee_Recu == ACKNOWLEDGE)
+		/*else if (Type_Donnee_Recu == ACKNOWLEDGE)
 		{
 			if (Donnee[0] == 'F')
 			{
@@ -316,19 +366,27 @@ void Decortiquer_Paquet(char * Data)
 			{
 				Ack_Ok = true;
 			}
-		}
+		}*/
+		//else if(Tot_Paquet == No_Paquet)
+		//{
+			//printSeparator();
+			//return 1;
+		//}
 		else
 		{
-			Numero_Paquet = 0;
+			/*Numero_Paquet = 0;
 			memset(Paquet, '\0', Longueur_Paquet);
 			Paquet[2] = ACKNOWLEDGE/10;
 			Paquet[3] = ACKNOWLEDGE%10;
 			char Ack = 'T';
 			Nombre_Info = 1;
-			SendPackage(Ack,sizeof(Ack));
+			SendPackage(Ack,sizeof(Ack));*/
+			printString("\n\r\t");
 			printString(Donnee);
 		}
+		printString("\n\r\t");
 	}
+	return 0;
 }
 
 void Acknowledge_Paquet(){
@@ -344,7 +402,7 @@ void Acknowledge_Paquet(){
 }
 
 void requestTargetAllID(int cred){
-	if(cred == CIVILIAN || cred == PROFESSIONAL || cred == AUTHORITARIAN){
+	if(cred == CIVILIAN || cred == MEDECIN || cred == POLICIER){
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
 		Paquet[2] = CREDENTIAL/10;
@@ -358,7 +416,7 @@ void requestTargetAllID(int cred){
 }
 
 void writeTargetFirstName(UserProfil up, char* firstName){
-	if(up.credential == CIVILIAN || up.credential == PROFESSIONAL || up.credential == AUTHORITARIAN){
+	if(up.credential == CIVILIAN || up.credential == MEDECIN || up.credential == POLICIER){
 		Numero_Paquet = 0;
 		memset(Paquet, '\0', Longueur_Paquet);
 		Paquet[2] = PRENOM/10;

@@ -27,8 +27,8 @@
 typedef enum Credentials{
 	NOTHING,
 	CIVILIAN,
-	PROFESSIONAL,
-	AUTHORITARIAN
+	MEDECIN,
+	POLICIER
 	} Credential;
 	
 enum DataTypeHeader{
@@ -49,7 +49,13 @@ enum DataTypeHeader{
 	END,
 	CREDENTIAL,
 	ERROR,
-	ACKNOWLEDGE
+	ACKNOWLEDGE,
+	NUMERO_PERMIS,
+	NUMERO_PLAQUE,
+	NUMERO_ASSURANCE,
+	CLASSE,
+	CONDITION,
+	RESTRICTION
 } Access[20];
 
 typedef struct UserProfils{
@@ -80,7 +86,7 @@ int identifyUser(char* username, short sizeUsername, char* password, short sizeP
 void initPossibleProfils();
 void readSelfData(int ClientCredential);
 void SendPackage(char * ptr, size_t n_elements);
-void Decortiquer_Paquet(char * Data);
+int Decortiquer_Paquet(char * Data);
 void Acknowledge_Paquet();
 
 //Definition of terms :

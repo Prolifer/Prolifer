@@ -27,9 +27,5 @@ void readString(char* s_buffer);
 //GUI
 int openingMenu();
 int openingSession();
-int askUserOperation();
-
-
-
 
 #endif /* GUI_H_ */

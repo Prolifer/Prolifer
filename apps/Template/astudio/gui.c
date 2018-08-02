@@ -102,7 +102,7 @@ int openingMenu(){
 	int cred = 0;
 	char option = '\0';
 	
-	while((option != '1' || option != '2') && cred != 0){
+	while((option != '1' || option != '2') && cred == 0){
 		printGuiHeaders();
 		printString("\n\r");
 		printString("SELECT OPTION: \n\r\t1 - OPEN SESSION \n\r\t2 - EXIT");
@@ -123,7 +123,7 @@ int openingMenu(){
 				break;
 		}
 	}
-	return 1;
+	return cred;
 }
 
 int openingSession(){
@@ -152,8 +152,4 @@ int openingSession(){
 			tries--;
 		}
 		return 0;
-}
-
-int askUserOperation(){
-	
 }

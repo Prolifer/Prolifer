@@ -15,20 +15,26 @@
 char Error[] = "Vous n'avez pas les droits pour écrire dans le bracelet";
 
 //TODO: Create a CIVILIAN DUMMY
-char Nom[] = "Sylvain-Cameron";
-char Prenom[] = "Alexandre";
-char Date_Naissance[] = "1994-04-06";
-char Adresse[] = "2145 Rue Galt Ouest";
-char Appartement[] = "211";
-char Ville[] = "Sherbrooke";
-char Pays[] = "Canada";
-char Province[] = "Québec";
-char Code_Postale[] = "J1K1K3";
-char Soin_Particulier[] = "";
-char Medicament[] = "";
-char Maladie[] = "";
+char Nom[] = "Nom : Sylvain-Cameron";
+char Prenom[] = "Prénom : Alexandre";
+char Date_Naissance[] = "Date de naissance : 1994-04-06";
+char Adresse[] = "AAdresse : 2145 Rue Galt Ouest";
+char Appartement[] = "Appartement : 211";
+char Ville[] = "Ville : Sherbrooke";
+char Pays[] = "Pays : Canada";
+char Province[] = "Province : Québec";
+char Code_Postale[] = "Code postale : J1K1K3";
+char Soin_Particulier[] = "Soin particulier : Pas de massage cardiaque";
+char Medicament[] = "Médicament : Concerta";
+char Maladie[] = "Maladie : Diabète type 2";
 char Commentaire[] = "";
-char Groupe_Sanguin[] = "";
+char Groupe_Sanguin[] = "Groupe sanguin : O+";
+char Numero_Permis[] = "Numéro de permis : A0000-000000-00";
+char Numero_Plaque[] = "Numéro de plaque : AAAAAA";
+char Numero_Assurance[] = "Numero d'assurance : ASSURANCENUMBER";
+char Classe[] = "Classe : 5";
+char Condition[] = "Condition : A";
+char Restriction[] = "Restriction : Interdit de conduire entre minuit et 5h";
 
 //TODO: Create a PROFESSIONAL DUMMY
 

@@ -86,8 +86,6 @@ int choice = 0;
 
 int cred = 0;
 
-int oneTime = 1;
-
 /*- Implementations --------------------------------------------------------*/
 
 // Put your function implementations here
@@ -112,22 +110,21 @@ static void APP_TaskHandler(void)
   
   if(receivedWireless == 1) //est-ce qu'un paquet a été recu sur le wireless? 
   {
-	 Decortiquer_Paquet(ind.data);
-
-	 //receivedWireless = 0;
+	 int w = Decortiquer_Paquet(ind.data);
+	 if(w>0){
+		cred = 0;
+	 }
+	 
+	 receivedWireless = 0;
+	 
 	 //choice = 0;
 	 //operating = 0;
   }
-
-
   
-	if(timer_flag == 1)
-		seconds++;
-	
-	if(oneTime == 1){
-		requestTargetAllID(cred);
-		oneTime = 0;
-	}
+	//if(timer_flag == 1){
+		//seconds++;
+		//timer_flag = 0;
+	//}
 }
 
 /*************************************************************************//**
@@ -137,23 +134,31 @@ int main(void)
 	SYS_Init();
 	Timer_Init();
 	Board_Init();
-	
+
+	//while(1){
+		//if(1)//credential)
+			//choice = askUserOperation();
+		//if(choice > 0)
+		//{	
+			//operating = 1;
+		//}
+
 
 	cred = openingMenu();
-	if(cred > 0){
-		//while(1){
-			//if(1)//credential)
-				//choice = askUserOperation();
-			//if(choice > 0)
-			//{	
-				//operating = 1;
-			//}
+	requestTargetAllID(cred);
+	while (1)//credential == civilian)
+	{
 		
-			while (1)//credential == civilian)
-			{
-				PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
-				APP_TaskHandler(); //l'application principale roule ici
-			}
+		//FORCE OBSCURE 
+		//if(cred == 0){
+		//cred = openingMenu();
+			//if(cred > 0){
+				//requestTargetAllID(cred);
+			//}
+		//}
+		
+		PHY_TaskHandler(); //stack wireless: va vérifier s'il y a un paquet recu
+		APP_TaskHandler(); //l'application principale roule ici
 	}
 	
     return 0;
